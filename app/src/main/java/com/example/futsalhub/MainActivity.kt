@@ -19,6 +19,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        //setting toolbar as the actionbar as there is no actionbar (actionbar is needed for setupActionBarWithNavController)
         val toolbar=findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
 

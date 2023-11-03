@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginTop="20dp"
+    android:layout_marginStart="35dp"
+    android:layout_marginEnd="35dp"
+    app:cardElevation="4dp"
+    app:cardCornerRadius="11dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/tvGroundImage"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/futsal" />
+
+        <TextView
+            android:id="@+id/tvGroundRating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/tvGroundPrice"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="6dp"
+            android:background="@color/white"
+            android:drawableLeft="@drawable/baseline_star_24"
+            android:padding="2dp"
+            android:text="Rating" />
+
+        <TextView
+            android:id="@+id/tvGroundName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvGroundImage"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:paddingStart="20dp"
+            android:paddingTop="10dp"
+            android:text="GroundName"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:textColor="@android:color/darker_gray"
+            android:id="@+id/tvGroundLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvGroundName"
+            android:drawableLeft="@drawable/baseline_location_on_24"
+            android:maxLines="1"
+            android:paddingStart="20dp"
+            android:paddingBottom="10dp"
+            android:text="Location" />
+
+        <TextView
+            android:id="@+id/from"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/darker_gray"
+            android:text="from"
+            android:paddingBottom="10dp"
+            android:layout_below="@+id/tvGroundName"
+            android:layout_toLeftOf="@+id/tvGroundPrice"/>
+
+        <TextView
+            android:id="@+id/tvGroundPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvGroundImage"
+            android:layout_alignParentRight="true"
+            android:paddingLeft="5dp"
+            android:paddingTop="30dp"
+            android:paddingEnd="20dp"
+            android:paddingBottom="10dp"
+            android:text="Price"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>
