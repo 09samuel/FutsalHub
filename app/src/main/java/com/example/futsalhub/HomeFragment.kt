@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
@@ -41,6 +42,13 @@ class HomeFragment : Fragment() {
         recyclerView.layoutManager = layoutManager
         groundAdapter = GroundListAdapter(firestoreRecyclerOptions)
         recyclerView.adapter = groundAdapter
+
+
+        groundAdapter!!.onItemClick = {
+            view.findNavController().navigate(R.id.action_listScreen_to_groundScreen)
+        }
+
+
     }
 
     override fun onStart() {

@@ -29,7 +29,7 @@
             android:layout_marginRight="20dp"
             android:layout_marginBottom="6dp"
             android:background="@color/white"
-            android:drawableLeft="@drawable/baseline_star_24"
+            android:drawableLeft="@drawable/ic_star"
             android:padding="2dp"
             android:text="Rating" />
 
@@ -52,7 +52,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvGroundName"
-            android:drawableLeft="@drawable/baseline_location_on_24"
+            android:drawableLeft="@drawable/ic_location"
             android:maxLines="1"
             android:paddingStart="20dp"
             android:paddingBottom="10dp"

@@ -9,4 +9,7 @@
     <string name="profile">Profile</string>
     <string name="booking_history">Booking History</string>
     <string name="home">Home</string>
+    <string name="name">Name</string>
+    <string name="rating">Rating</string>
+    <string name="distance">Distance</string>
 </resources>
