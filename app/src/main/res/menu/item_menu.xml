@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item android:id="@+id/home"
-    android:title="@string/home"
-    android:icon="@drawable/ic_home"/>
+        android:title="@string/home"
+        android:icon="@drawable/ic_home"/>
 
     <item android:id="@+id/history"
         android:title="@string/booking_history"
@@ -12,4 +13,5 @@
     <item android:id="@+id/profile"
         android:title="@string/profile"
         android:icon="@drawable/ic_profile"/>
+
 </menu>

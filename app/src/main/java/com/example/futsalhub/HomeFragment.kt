@@ -47,8 +47,6 @@ class HomeFragment : Fragment() {
         groundAdapter!!.onItemClick = {
             view.findNavController().navigate(R.id.action_listScreen_to_groundScreen)
         }
-
-
     }
 
     override fun onStart() {
@@ -60,5 +58,7 @@ class HomeFragment : Fragment() {
         super.onStop()
         groundAdapter?.stopListening()
     }
+
+
 
 }

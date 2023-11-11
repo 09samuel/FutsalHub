@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/bottom_sheet"
     android:layout_width="wrap_content"
@@ -67,10 +68,42 @@
         android:textSize="20sp" />
 
     <TextView
-        android:id="@+id/tv_location"
+        android:id="@+id/tv_availibility"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tv_filter"
+        android:paddingLeft="20dp"
+        android:paddingBottom="16dp"
+        android:text="Availibility"
+        android:textSize="16sp" />
+
+    <EditText
+        android:id="@+id/editTextDate"
+        android:layout_width="171dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_availibility"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginRight="20dp"
+        android:ems="10"
+        android:hint="Enter Date"
+        android:inputType="date"/>
+
+    <EditText
+        android:id="@+id/editTextTime"
+        android:layout_width="110dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_availibility"
+        android:layout_toRightOf="@+id/editTextDate"
+        android:ems="10"
+        android:hint="Enter Time"
+        android:inputType="time" />
+
+    <TextView
+        android:id="@+id/tv_location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/divider_1"
         android:paddingLeft="20dp"
         android:paddingBottom="16dp"
         android:text="Location"
@@ -107,7 +140,7 @@
         android:id="@+id/divider_1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/chipGroup"
+        android:layout_below="@+id/editTextDate"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="4dp" />
 
@@ -115,7 +148,7 @@
         android:id="@+id/tv_type"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/divider_1"
+        android:layout_below="@+id/divider_2"
         android:paddingLeft="20dp"
         android:paddingBottom="16dp"
         android:text="Type Of Ground"
@@ -152,48 +185,16 @@
         android:id="@+id/divider_2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/chipGroup2"
+        android:layout_below="@+id/chipGroup"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="4dp" />
-
-    <TextView
-        android:id="@+id/tv_availibility"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/divider_2"
-        android:paddingLeft="20dp"
-        android:paddingBottom="16dp"
-        android:text="Availibility"
-        android:textSize="16sp" />
-
-    <EditText
-        android:id="@+id/editTextDate"
-        android:layout_width="171dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_availibility"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="0dp"
-        android:layout_marginRight="20dp"
-        android:ems="10"
-        android:hint="Enter Date"
-        android:inputType="date"/>
-
-    <EditText
-        android:id="@+id/editTextTime"
-        android:layout_width="110dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_availibility"
-        android:layout_toRightOf="@+id/editTextDate"
-        android:ems="10"
-        android:hint="Enter Time"
-        android:inputType="time" />
 
     <Button
         android:id="@+id/btn_cancel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Cancel"
-        android:layout_below="@+id/editTextDate"
+        android:layout_below="@+id/chipGroup2"
         android:layout_marginTop="30dp"
         style="?attr/materialButtonOutlinedStyle"
         android:layout_marginBottom="20dp"
@@ -205,7 +206,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Apply"
-        android:layout_below="@+id/editTextDate"
+        android:layout_below="@+id/chipGroup2"
         android:layout_toRightOf="@+id/btn_cancel"
         android:layout_marginTop="30dp"
         android:layout_marginBottom="20dp"

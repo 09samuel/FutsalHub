@@ -51,7 +51,6 @@ dependencies {
     implementation("androidx.cardview:cardview:1.0.0")
     implementation("com.google.firebase:firebase-firestore:24.9.1")
     implementation("com.firebaseui:firebase-ui-firestore:8.0.2")
-    implementation("com.github.denzcoskun:ImageSlideshow:0.1.2")
     implementation("com.google.android.material:material:1.10.0")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
