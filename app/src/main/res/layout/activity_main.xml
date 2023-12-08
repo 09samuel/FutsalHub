@@ -28,7 +28,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:menu="@menu/search_menu" />
+                app:menu="@menu/search_menu"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -61,7 +61,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginTop="62dp"
         app:defaultNavHost="true"
-        app:navGraph="@navigation/nav_graph" />
+        app:navGraph="@navigation/customer_graph" />
 
 </RelativeLayout>
 

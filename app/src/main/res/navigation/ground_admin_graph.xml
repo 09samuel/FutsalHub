@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ground_admin_graph"
+    app:startDestination="@id/groundAdminDashboard">
+
+    <fragment
+        android:id="@+id/groundAdminDashboard"
+        android:name="com.example.futsalhub.GroundAdminDashboard"
+        android:label="fragment_ground_admin_dashboard"
+        tools:layout="@layout/fragment_ground_admin_dashboard" />
+</navigation>

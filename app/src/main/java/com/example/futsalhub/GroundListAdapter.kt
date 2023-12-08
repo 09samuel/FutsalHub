@@ -9,10 +9,14 @@ import com.firebase.ui.firestore.FirestoreRecyclerAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 
 
-class GroundListAdapter(options: FirestoreRecyclerOptions<GroundListModel>) :
+class GroundListAdapter(
+    options: FirestoreRecyclerOptions<GroundListModel>,
+    private val handleUserData: (GroundListModel) -> Unit
+) :
     FirestoreRecyclerAdapter<GroundListModel, GroundListAdapter.GroundAdapterVH>(options) {
 
-    var onItemClick: ((GroundListModel) -> Unit)? = null
+    //var onItemClick: ((GroundListModel) -> Unit)? = null
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GroundAdapterVH {
         return GroundAdapterVH(LayoutInflater.from(parent.context).inflate(R.layout.ground_item, parent, false))
@@ -33,8 +37,11 @@ class GroundListAdapter(options: FirestoreRecyclerOptions<GroundListModel>) :
 
         init{
             itemView.setOnClickListener {
-                onItemClick?.invoke(getItem(adapterPosition))
+                //onItemClick?.invoke(getItem(adapterPosition))
+                //val documentId = snapshots.getSnapshot(adapterPosition).id
+                //Log.e("mt",documentId)
+                handleUserData(getItem(adapterPosition))
             }
-        }
+         }
     }
 }
