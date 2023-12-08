@@ -43,7 +43,7 @@
             android:paddingStart="20dp"
             android:paddingTop="10dp"
             android:text="GroundName"
-            android:textSize="20sp"
+            android:textSize="16sp"
             android:textStyle="bold" />
 
         <TextView
@@ -56,6 +56,7 @@
             android:maxLines="1"
             android:paddingStart="20dp"
             android:paddingBottom="10dp"
+            android:textSize="12sp"
             android:text="Location" />
 
         <TextView
@@ -64,6 +65,7 @@
             android:layout_height="wrap_content"
             android:textColor="@android:color/darker_gray"
             android:text="from"
+            android:textSize="12sp"
             android:paddingBottom="10dp"
             android:layout_below="@+id/tvGroundName"
             android:layout_toLeftOf="@+id/tvGroundPrice"/>
@@ -75,11 +77,11 @@
             android:layout_below="@+id/tvGroundImage"
             android:layout_alignParentRight="true"
             android:paddingLeft="5dp"
-            android:paddingTop="30dp"
+            android:paddingTop="28dp"
             android:paddingEnd="20dp"
             android:paddingBottom="10dp"
             android:text="Price"
-            android:textSize="20sp"
+            android:textSize="16sp"
             android:textStyle="bold" />
 
     </RelativeLayout>

@@ -18,7 +18,6 @@ class GroundFragment : Fragment() {
        // binding = FragmentGroundBinding.inflate(inflater,container,false)
 
 
-
         val str= arguments?.getString("str")
 
         if (str != null) {

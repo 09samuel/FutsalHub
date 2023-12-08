@@ -31,7 +31,7 @@ class HomeFragment : Fragment() {
 
         val query: Query = FirebaseFirestore.getInstance()
             .collection("FutsalGrounds")
-            .orderBy("groundName")
+            .orderBy("ovrRating")
 
         val firestoreRecyclerOptions: FirestoreRecyclerOptions<GroundListModel> =
             FirestoreRecyclerOptions.Builder<GroundListModel>()
@@ -51,9 +51,10 @@ class HomeFragment : Fragment() {
 
         binding.searchBar.setOnQueryTextListener(object: SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(query: String?): Boolean {
+
                 val q: Query = FirebaseFirestore.getInstance()
                     .collection("FutsalGrounds")
-                    .orderBy("groundName").startAt(query).endAt(query + '~');
+                    .orderBy("groundName").startAt(query?.capitalizeWords()).endAt(query?.capitalizeWords() + '~');
 
                 val firestoreRecyclerOptions: FirestoreRecyclerOptions<GroundListModel> =
                     FirestoreRecyclerOptions.Builder<GroundListModel>()
@@ -71,9 +72,9 @@ class HomeFragment : Fragment() {
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-               /* val q: Query = FirebaseFirestore.getInstance()
+               val q: Query = FirebaseFirestore.getInstance()
                     .collection("FutsalGrounds")
-                    .orderBy("groundName").startAt(newText).endAt(newText + '~');
+                    .orderBy("groundName").startAt(newText?.capitalizeWords()).endAt(newText?.capitalizeWords() + '~');
 
                 val firestoreRecyclerOptions: FirestoreRecyclerOptions<GroundListModel> =
                     FirestoreRecyclerOptions.Builder<GroundListModel>()
@@ -85,7 +86,7 @@ class HomeFragment : Fragment() {
                 recyclerView.layoutManager = layoutManager
                 groundAdapter = GroundListAdapter(firestoreRecyclerOptions, ::handleUserData)
                 groundAdapter!!.startListening()
-                recyclerView.adapter = groundAdapter*/
+                recyclerView.adapter = groundAdapter
                 return false
             }
         })
@@ -98,9 +99,10 @@ class HomeFragment : Fragment() {
         return binding.root
     }
 
+    fun String.capitalizeWords(): String = split(" ").map { it.capitalize() }.joinToString(" ")
 
     private fun handleUserData(data: GroundListModel) {
-
+        findNavController().navigate(R.id.action_listScreen_to_groundScreen)
         val groundFragment=GroundFragment()
         val bundle=Bundle()
 
@@ -111,7 +113,7 @@ class HomeFragment : Fragment() {
         }
         bundle.putString("str",data.groundId)
         groundFragment.arguments=bundle
-        findNavController().navigate(R.id.action_listScreen_to_groundScreen)
+
     }
 
     override fun onStart() {
