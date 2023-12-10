@@ -7,35 +7,35 @@
     android:background="@color/white"
     tools:context=".HomeFragment">
 
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:id="@+id/relative_layout_2"
-    android:paddingBottom="25dp"
-    android:layout_marginBottom="5dp"
-    android:background="@drawable/round_design">
-
-    <androidx.appcompat.widget.SearchView
-        app:iconifiedByDefault="false"
-        app:queryBackground="@android:color/transparent"
-        android:layout_toLeftOf="@id/btn_sort_filter"
-        android:id="@+id/search_bar"
+    <RelativeLayout
+        android:id="@+id/relative_layout_2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/round_corner"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="5dp" />
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/round_design"
+        android:paddingBottom="20dp">
 
-    <ImageButton
-        android:layout_alignParentRight="true"
-        android:id="@+id/btn_sort_filter"
-        android:src="@drawable/ic_sort_filter"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="10dp"
-        android:layout_marginLeft="5dp" />
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/search_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="5dp"
+            android:layout_toLeftOf="@id/btn_sort_filter"
+            android:background="@drawable/round_corner"
+            app:iconifiedByDefault="false"
+            app:queryBackground="@android:color/transparent" />
 
-</RelativeLayout>
+        <ImageButton
+            android:id="@+id/btn_sort_filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/ic_sort_filter" />
+
+    </RelativeLayout>
 
 
     <androidx.recyclerview.widget.RecyclerView
@@ -43,7 +43,7 @@
         android:layout_width="match_parent"
         android:layout_height="682dp"
         android:layout_below="@+id/relative_layout_2"
-        android:paddingBottom="100dp"
         android:clipToPadding="false"
-        android:scrollbarStyle="outsideOverlay"  />
+        android:paddingBottom="100dp"
+        android:scrollbarStyle="outsideOverlay" />
 </RelativeLayout>

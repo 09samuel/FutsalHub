@@ -2,13 +2,16 @@ package com.example.futsalhub
 
 import android.app.SearchManager
 import android.content.Context
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResult
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -28,6 +31,11 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         binding = FragmentHomeBinding.inflate(inflater,container,false)
+
+        (activity as AppCompatActivity).supportActionBar?.setHomeAsUpIndicator(R.drawable.futsalhub_logo)
+        (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        (activity as AppCompatActivity).supportActionBar?.title = ""
+        (activity as AppCompatActivity).supportActionBar?.setBackgroundDrawable(ColorDrawable(resources.getColor(R.color.green)))
 
         val query: Query = FirebaseFirestore.getInstance()
             .collection("FutsalGrounds")
@@ -102,18 +110,8 @@ class HomeFragment : Fragment() {
     fun String.capitalizeWords(): String = split(" ").map { it.capitalize() }.joinToString(" ")
 
     private fun handleUserData(data: GroundListModel) {
+        setFragmentResult("requestKey", bundleOf("bundleKey" to data.groundId))
         findNavController().navigate(R.id.action_listScreen_to_groundScreen)
-        val groundFragment=GroundFragment()
-        val bundle=Bundle()
-
-
-        val boil=data.groundId
-        if (boil != null) {
-            Log.i("mmmm",boil)
-        }
-        bundle.putString("str",data.groundId)
-        groundFragment.arguments=bundle
-
     }
 
     override fun onStart() {

@@ -6,6 +6,7 @@ class GroundListModel {
     var location: String?=null
     var minPrice: String?=null
     var ovrRating: String?=null
+    var groundImg: String?=null
 
     constructor()
 }
