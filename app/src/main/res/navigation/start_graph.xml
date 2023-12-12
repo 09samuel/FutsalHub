@@ -18,5 +18,9 @@
         android:id="@+id/registrationScreen"
         android:name="com.example.futsalhub.RegistrationFragment"
         android:label="fragment_registration"
-        tools:layout="@layout/fragment_registration" />
+        tools:layout="@layout/fragment_registration" >
+        <action
+            android:id="@+id/action_registrationScreen_to_loginScreen"
+            app:destination="@id/loginScreen" />
+    </fragment>
 </navigation>

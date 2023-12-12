@@ -51,6 +51,7 @@ dependencies {
     implementation("androidx.cardview:cardview:1.0.0")
     implementation("com.google.firebase:firebase-firestore:24.9.1")
     implementation("com.firebaseui:firebase-ui-firestore:8.0.2")
+    implementation("com.google.firebase:firebase-auth-ktx:22.3.0")
     implementation("com.google.android.material:material:1.10.0")
     implementation("com.google.firebase:firebase-storage:20.3.0")
     testImplementation("junit:junit:4.13.2")

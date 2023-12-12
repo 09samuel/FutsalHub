@@ -10,18 +10,20 @@
     app:cardCornerRadius="11dp">
 
     <RelativeLayout
+        android:background="@color/grey"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <ImageView
             android:id="@+id/ivGroundImage"
             android:layout_width="match_parent"
-            android:layout_height="120dp"
+            android:layout_height="128dp"
             android:scaleType="centerCrop" />
 
         <TextView
             android:id="@+id/tvGroundRating"
             android:textSize="12dp"
+            android:textColor="@color/white"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_above="@+id/tvGroundPrice"
@@ -34,6 +36,7 @@
             android:text="Rating" />
 
         <TextView
+            android:textColor="@color/white"
             android:id="@+id/tvGroundName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -41,7 +44,7 @@
             android:ellipsize="end"
             android:maxLines="1"
             android:paddingStart="20dp"
-            android:paddingTop="10dp"
+            android:paddingTop="8dp"
             android:text="GroundName"
             android:textSize="16sp"
             android:textStyle="bold" />
@@ -55,7 +58,7 @@
             android:drawableLeft="@drawable/ic_location"
             android:maxLines="1"
             android:paddingStart="20dp"
-            android:paddingBottom="10dp"
+            android:paddingBottom="8dp"
             android:textSize="12sp"
             android:text="Location" />
 
@@ -66,22 +69,23 @@
             android:textColor="@android:color/darker_gray"
             android:text="from"
             android:textSize="12sp"
-            android:paddingBottom="10dp"
+            android:paddingBottom="8dp"
             android:layout_below="@+id/tvGroundName"
             android:layout_toLeftOf="@+id/tvGroundPrice"/>
 
         <TextView
+            android:textColor="@color/white"
             android:id="@+id/tvGroundPrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/ivGroundImage"
             android:layout_alignParentRight="true"
             android:paddingLeft="5dp"
-            android:paddingTop="28dp"
+            android:paddingTop="22dp"
             android:paddingEnd="20dp"
-            android:paddingBottom="10dp"
+            android:paddingBottom="6dp"
             android:text="Price"
-            android:textSize="16sp"
+            android:textSize="18sp"
             android:textStyle="bold" />
 
     </RelativeLayout>
