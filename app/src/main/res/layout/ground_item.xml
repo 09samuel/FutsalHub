@@ -21,6 +21,7 @@
             android:scaleType="centerCrop" />
 
         <TextView
+            android:fontFamily="@font/gotham_book"
             android:id="@+id/tvGroundRating"
             android:textSize="12dp"
             android:textColor="@color/white"
@@ -36,6 +37,8 @@
             android:text="Rating" />
 
         <TextView
+            android:fontFamily="@font/gotham_medium_"
+
             android:textColor="@color/white"
             android:id="@+id/tvGroundName"
             android:layout_width="wrap_content"
@@ -50,6 +53,8 @@
             android:textStyle="bold" />
 
         <TextView
+            android:fontFamily="@font/gotham_book"
+
             android:textColor="@android:color/darker_gray"
             android:id="@+id/tvGroundLocation"
             android:layout_width="wrap_content"
@@ -57,6 +62,7 @@
             android:layout_below="@+id/tvGroundName"
             android:drawableLeft="@drawable/ic_location"
             android:maxLines="1"
+            android:layout_marginTop="6dp"
             android:paddingStart="20dp"
             android:paddingBottom="8dp"
             android:textSize="12sp"
@@ -68,12 +74,17 @@
             android:layout_height="wrap_content"
             android:textColor="@android:color/darker_gray"
             android:text="from"
+            android:layout_marginTop="6dp"
+            android:fontFamily="@font/gotham_book"
+
             android:textSize="12sp"
             android:paddingBottom="8dp"
             android:layout_below="@+id/tvGroundName"
             android:layout_toLeftOf="@+id/tvGroundPrice"/>
 
         <TextView
+            android:fontFamily="@font/gotham_medium_"
+
             android:textColor="@color/white"
             android:id="@+id/tvGroundPrice"
             android:layout_width="wrap_content"
@@ -81,7 +92,7 @@
             android:layout_below="@+id/ivGroundImage"
             android:layout_alignParentRight="true"
             android:paddingLeft="5dp"
-            android:paddingTop="22dp"
+            android:paddingTop="28dp"
             android:paddingEnd="20dp"
             android:paddingBottom="6dp"
             android:text="Price"

@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
@@ -30,10 +31,10 @@ class RegistrationFragment : Fragment() {
         db = FirebaseFirestore.getInstance()
 
         binding.btnRegister.setOnClickListener {
-            val name = binding.etName.text.toString()
-            val email = binding.etRegEmail.text.toString()
-            val password = binding.etRegPassword.text.toString()
-            val confirmPassword = binding.etRegConfirmPassword.text.toString()
+            val name = binding.etRegisterName.text.toString()
+            val email = binding.etRegisterEmail.text.toString()
+            val password = binding.etRegisterPassword.text.toString()
+            val confirmPassword = binding.etRegisterConfirmPassword.text.toString()
 
 
             if (name.isNotEmpty() && email.isNotEmpty() && password.isNotEmpty() && confirmPassword.isNotEmpty()) {
@@ -47,7 +48,8 @@ class RegistrationFragment : Fragment() {
                                             val cid = FirebaseAuth.getInstance().currentUser?.uid
                                             // Store customer data in db
                                             val user = hashMapOf(
-                                                "name" to name,
+                                                "userId" to cid,
+                                                "userName" to name,
                                                 "email" to email,
                                                 "accessLevel" to "0",
                                             )
@@ -94,10 +96,36 @@ class RegistrationFragment : Fragment() {
                             }
                         }
                 } else {
-                    Toast.makeText(activity, "Password is not Matching", Toast.LENGTH_SHORT).show()
+                    binding.tfRegisterConfirmPassword.error = "Password and Confirm Password do not match"
+                    binding.etRegisterConfirmPassword.addTextChangedListener {
+                        binding.tfRegisterConfirmPassword.error = null
+                    }
                 }
             } else {
-                Toast.makeText(activity, "Please enter all the fields", Toast.LENGTH_SHORT).show()
+                if (name.isEmpty()) {
+                    binding.tfRegisterName.error = "Enter name"
+                    binding.etRegisterName.addTextChangedListener {
+                        binding.tfRegisterName.error = null
+                    }
+                }
+                if (email.isEmpty()) {
+                    binding.tfRegisterEmail.error = "Enter email"
+                    binding.etRegisterEmail.addTextChangedListener {
+                        binding.tfRegisterEmail.error = null
+                    }
+                }
+                if (password.isEmpty()) {
+                    binding.tfRegisterPassword.error = "Enter password"
+                    binding.etRegisterPassword.addTextChangedListener {
+                        binding.tfRegisterPassword.error = null
+                    }
+                }
+                if (confirmPassword.isEmpty()) {
+                    binding.tfRegisterConfirmPassword.error = "Enter confirm password"
+                    binding.etRegisterConfirmPassword.addTextChangedListener {
+                        binding.tfRegisterConfirmPassword.error = null
+                    }
+                }
             }
         }
 

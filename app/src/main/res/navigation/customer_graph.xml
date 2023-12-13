@@ -41,7 +41,32 @@
             android:id="@+id/profileScreen"
             android:name="com.example.futsalhub.ProfileFragment"
             android:label="fragment_profile"
-            tools:layout="@layout/fragment_profile" />
+            tools:layout="@layout/fragment_profile" >
+            <action
+                android:id="@+id/action_profileScreen_to_editProfileFragment"
+                app:destination="@id/editProfileFragment" />
+            <action
+                android:id="@+id/action_profileScreen_to_termsAndConditionsFragment"
+                app:destination="@id/termsAndConditionsFragment" />
+            <action
+                android:id="@+id/action_profileScreen_to_contactUsFragment"
+                app:destination="@id/contactUsFragment" />
+        </fragment>
+        <fragment
+            android:id="@+id/editProfileFragment"
+            android:name="com.example.futsalhub.EditProfileFragment"
+            android:label="fragment_edit_profile"
+            tools:layout="@layout/fragment_edit_profile" />
+        <fragment
+            android:id="@+id/termsAndConditionsFragment"
+            android:name="com.example.futsalhub.TermsAndConditionsFragment"
+            android:label="fragment_terms_and_conditions"
+            tools:layout="@layout/fragment_terms_and_conditions" />
+        <fragment
+            android:id="@+id/contactUsFragment"
+            android:name="com.example.futsalhub.ContactUsFragment"
+            android:label="fragment_contact_us"
+            tools:layout="@layout/fragment_contact_us" />
     </navigation>
 
 </navigation>

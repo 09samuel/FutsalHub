@@ -41,17 +41,15 @@ class LoginFragment : Fragment() {
                     }
                 }
 
-            } else if (email.isEmpty() && password.isEmpty()) {
-                binding.tfLoginEmail.error = "Enter email"
-                removeEmailError()
-                binding.tfLoginPassword.error = "Enter password"
-                removePasswordError()
-            } else if (email.isEmpty()) {
-                binding.tfLoginEmail.error = "Enter email"
-                removeEmailError()
             } else {
-                binding.tfLoginPassword.error = "Enter password"
-                removePasswordError()
+                if (email.isEmpty()) {
+                    binding.tfLoginEmail.error = "Enter email"
+                    removeEmailError()
+                }
+                if (password.isEmpty()) {
+                    binding.tfLoginPassword.error = "Enter password"
+                    removePasswordError()
+                }
             }
         }
 
@@ -100,8 +98,9 @@ class LoginFragment : Fragment() {
     private fun checkAccessLevel() {
         if (firebaseAuth.currentUser!!.isEmailVerified) {
             db = FirebaseFirestore.getInstance()
-            val ref = db.collection("Users").document(firebaseAuth.currentUser.toString())
-            ref.get().addOnSuccessListener {
+            val uid = FirebaseAuth.getInstance().currentUser?.uid
+            val ref = uid?.let { db.collection("Users").document(it) }
+            ref?.get()?.addOnSuccessListener {
                 if (it != null) {
                     val accessLevel = it.data?.get("accessLevel").toString()
                     if (accessLevel == "0") {
@@ -119,7 +118,7 @@ class LoginFragment : Fragment() {
                     }
                 }
             }
-                .addOnFailureListener {
+                ?.addOnFailureListener {
                     Log.i("mytag", "fail")
                 }
         } else {
@@ -128,7 +127,7 @@ class LoginFragment : Fragment() {
     }
 
     //remember login
-    override fun onStart() {
+    /*override fun onStart() {
         super.onStart()
         if (firebaseAuth.currentUser != null) {
             if (firebaseAuth.currentUser!!.isEmailVerified) {
@@ -137,5 +136,5 @@ class LoginFragment : Fragment() {
                 binding.tfLoginEmail.error = "Please verify your email"
             }
         }
-    }
+    }*/
 }
