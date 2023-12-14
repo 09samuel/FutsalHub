@@ -13,6 +13,9 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.example.futsalhub.databinding.FragmentRegistrationBinding
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
+import com.google.firebase.auth.FirebaseAuthUserCollisionException
+import com.google.firebase.auth.FirebaseAuthWeakPasswordException
 import com.google.firebase.firestore.FirebaseFirestore
 
 class RegistrationFragment : Fragment() {
@@ -45,7 +48,7 @@ class RegistrationFragment : Fragment() {
                                 firebaseAuth.currentUser?.sendEmailVerification()
                                     ?.addOnCompleteListener {
                                         if (it.isSuccessful) {
-                                            val cid = FirebaseAuth.getInstance().currentUser?.uid
+                                            val cid = firebaseAuth.currentUser?.uid
                                             // Store customer data in db
                                             val user = hashMapOf(
                                                 "userId" to cid,
@@ -88,43 +91,44 @@ class RegistrationFragment : Fragment() {
                                         }
                                     }
                             } else {
-                                Toast.makeText(
-                                    activity,
-                                    it.exception?.message.toString(),
-                                    Toast.LENGTH_SHORT
-                                ).show()
+                                try {
+                                    throw it.exception!!
+                                } catch (e: FirebaseAuthWeakPasswordException) {
+                                    binding.tfRegisterPassword.error =
+                                        it.exception?.message.toString()
+                                    removePasswordError()
+                                } catch (e: FirebaseAuthInvalidCredentialsException) {
+                                    binding.tfRegisterEmail.error = it.exception?.message.toString()
+                                    removeEmailError()
+                                } catch (e: FirebaseAuthUserCollisionException) {
+                                    binding.tfRegisterEmail.error = it.exception?.message.toString()
+                                    removeEmailError()
+                                } catch (e: Exception) {
+                                    Log.e(ContentValues.TAG, e.message!!)
+                                }
                             }
                         }
                 } else {
-                    binding.tfRegisterConfirmPassword.error = "Password and Confirm Password do not match"
-                    binding.etRegisterConfirmPassword.addTextChangedListener {
-                        binding.tfRegisterConfirmPassword.error = null
-                    }
+                    binding.tfRegisterConfirmPassword.error =
+                        "Password and Confirm Password do not match"
+                    removeConfirmPasswordError()
                 }
             } else {
                 if (name.isEmpty()) {
                     binding.tfRegisterName.error = "Enter name"
-                    binding.etRegisterName.addTextChangedListener {
-                        binding.tfRegisterName.error = null
-                    }
+                    removeNameError()
                 }
                 if (email.isEmpty()) {
                     binding.tfRegisterEmail.error = "Enter email"
-                    binding.etRegisterEmail.addTextChangedListener {
-                        binding.tfRegisterEmail.error = null
-                    }
+                    removeEmailError()
                 }
                 if (password.isEmpty()) {
                     binding.tfRegisterPassword.error = "Enter password"
-                    binding.etRegisterPassword.addTextChangedListener {
-                        binding.tfRegisterPassword.error = null
-                    }
+                    removePasswordError()
                 }
                 if (confirmPassword.isEmpty()) {
                     binding.tfRegisterConfirmPassword.error = "Enter confirm password"
-                    binding.etRegisterConfirmPassword.addTextChangedListener {
-                        binding.tfRegisterConfirmPassword.error = null
-                    }
+                    removeConfirmPasswordError()
                 }
             }
         }
@@ -135,4 +139,29 @@ class RegistrationFragment : Fragment() {
 
         return binding.root
     }
+
+    private fun removeNameError() {
+        binding.etRegisterName.addTextChangedListener {
+            binding.tfRegisterName.error = null
+        }
+    }
+
+    private fun removeEmailError() {
+        binding.etRegisterEmail.addTextChangedListener {
+            binding.tfRegisterEmail.error = null
+        }
+    }
+
+    private fun removePasswordError() {
+        binding.etRegisterPassword.addTextChangedListener {
+            binding.tfRegisterPassword.error = null
+        }
+    }
+
+    private fun removeConfirmPasswordError() {
+        binding.etRegisterConfirmPassword.addTextChangedListener {
+            binding.tfRegisterConfirmPassword.error = null
+        }
+    }
 }
+

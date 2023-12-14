@@ -34,33 +34,36 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/tv_sort"
         android:layout_centerInParent="true"
+        android:backgroundTint="@color/green"
         app:selectionRequired="true"
         app:singleSelection="true">
 
         <Button
-            android:textColor="@color/light_white"
             android:id="@+id/sort_name"
             style="?attr/materialButtonOutlinedStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/name" />
+            android:fontFamily="@font/gotham_book"
+            android:text="@string/name"
+            android:textColor="@color/light_white" />
 
         <Button
-            android:textColor="@color/light_white"
-
             android:id="@+id/sort_rating"
             style="?attr/materialButtonOutlinedStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/rating" />
+            android:fontFamily="@font/gotham_book"
+            android:text="@string/rating"
+            android:textColor="@color/light_white" />
 
         <Button
-            android:textColor="@color/light_white"
             android:id="@+id/sort_distance"
             style="?attr/materialButtonOutlinedStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/distance" />
+            android:fontFamily="@font/gotham_book"
+            android:text="@string/distance"
+            android:textColor="@color/light_white" />
     </com.google.android.material.button.MaterialButtonToggleGroup>
 
     <TextView
@@ -91,6 +94,7 @@
     <EditText
         android:id="@+id/editTextDate"
         android:layout_width="171dp"
+        android:fontFamily="@font/gotham_book"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tv_availibility"
         android:layout_marginLeft="20dp"
@@ -105,7 +109,7 @@
         android:id="@+id/editTextTime"
         android:layout_width="110dp"
         android:textColorHint="@color/light_white"
-
+        android:fontFamily="@font/gotham_book"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tv_availibility"
         android:layout_toRightOf="@+id/editTextDate"
@@ -135,28 +139,27 @@
         app:singleLine="true">
 
         <com.google.android.material.chip.Chip
-            android:fontFamily="@font/gotham_book"
             android:id="@+id/chip_1"
             style="@style/Widget.Material3.Chip.Filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="true"
-            android:textColorHighlight="@color/grey"
-            app:chipStrokeColor="@color/grey"
-            app:chipBackgroundColor="@color/green"
+            android:fontFamily="@font/gotham_book"
+            android:shadowColor="@color/grey"
+            android:text="North Goa"
             android:textColor="@color/black"
-            android:text="North Goa" />
+            app:chipBackgroundColor="@color/green" />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/chip_2"
-            android:fontFamily="@font/gotham_book"
-            android:textColor="@color/black"
-            app:chipBackgroundColor="@color/green"
             style="@style/Widget.Material3.Chip.Filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="true"
-            android:text="South Goa" />
+            android:fontFamily="@font/gotham_book"
+            android:text="South Goa"
+            android:textColor="@color/black"
+            app:chipBackgroundColor="@color/green" />
 
     </com.google.android.material.chip.ChipGroup>
 
@@ -186,7 +189,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tv_type"
-        android:layout_marginTop="-1dp"
+        android:layout_marginTop="0dp"
         android:paddingLeft="20dp"
         app:selectionRequired="true"
         app:singleLine="true">
@@ -197,10 +200,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="true"
-            app:chipBackgroundColor="@color/green"
-            android:textColor="@color/black"
             android:fontFamily="@font/gotham_book"
-            android:text="5-a side" />
+            android:text="5-a side"
+            android:textColor="@color/black"
+            app:chipBackgroundColor="@color/green" />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/chip2_2"
@@ -208,10 +211,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="true"
-            app:chipBackgroundColor="@color/green"
-            android:textColor="@color/black"
             android:fontFamily="@font/gotham_book"
-            android:text="6-a side" />
+            android:text="6-a side"
+            android:textColor="@color/black"
+            app:chipBackgroundColor="@color/green" />
 
     </com.google.android.material.chip.ChipGroup>
 
@@ -236,7 +239,7 @@
         style="?attr/materialButtonOutlinedStyle"
         android:layout_marginBottom="20dp"
         android:layout_marginRight="10dp"
-        android:layout_marginLeft="196dp"/>
+        android:layout_marginLeft="180dp"/>
 
     <Button
         android:textColor="@color/black"

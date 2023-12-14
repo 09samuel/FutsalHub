@@ -1,5 +1,6 @@
 package com.example.futsalhub
 
+import android.content.ContentValues
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -9,8 +10,11 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.example.futsalhub.databinding.FragmentLoginBinding
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
+import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import com.google.firebase.firestore.FirebaseFirestore
 
 
@@ -18,7 +22,6 @@ class LoginFragment : Fragment() {
     private lateinit var binding: FragmentLoginBinding
     private lateinit var firebaseAuth: FirebaseAuth
     private lateinit var db: FirebaseFirestore
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,8 +39,19 @@ class LoginFragment : Fragment() {
                     if (it.isSuccessful) {
                         checkAccessLevel()
                     } else {
-                        binding.tfLoginPassword.error = "Invalid email or password"
-                        removePasswordError()
+                        try {
+                            throw it.exception!!
+                        }  catch (e: FirebaseAuthInvalidCredentialsException) {
+                            binding.tfLoginEmail.error = it.exception?.message.toString()
+                            removeEmailError()
+                            binding.tfLoginPassword.error = it.exception?.message.toString()
+                            removePasswordError()
+                        } catch (e: FirebaseAuthInvalidUserException) {
+                            binding.tfLoginEmail.error = it.exception?.message.toString()
+                            removeEmailError()
+                        }  catch (e: Exception) {
+                            Log.e(ContentValues.TAG, e.message!!)
+                        }
                     }
                 }
 
@@ -54,10 +68,7 @@ class LoginFragment : Fragment() {
         }
 
         binding.tvSignUp.setOnClickListener {
-            val intent = Intent(activity, MainActivity::class.java)
-            startActivity(intent)
-            activity?.finish()
-            //findNavController().navigate(R.id.action_loginScreen_to_registrationScreen)
+            findNavController().navigate(R.id.action_loginScreen_to_registrationScreen)
         }
 
         binding.tvForgot.setOnClickListener {
@@ -96,45 +107,42 @@ class LoginFragment : Fragment() {
     }
 
     private fun checkAccessLevel() {
-        if (firebaseAuth.currentUser!!.isEmailVerified) {
-            db = FirebaseFirestore.getInstance()
-            val uid = FirebaseAuth.getInstance().currentUser?.uid
-            val ref = uid?.let { db.collection("Users").document(it) }
-            ref?.get()?.addOnSuccessListener {
-                if (it != null) {
-                    val accessLevel = it.data?.get("accessLevel").toString()
-                    if (accessLevel == "0") {
+        db = FirebaseFirestore.getInstance()
+        val uid = FirebaseAuth.getInstance().currentUser?.uid
+        val ref = uid?.let { db.collection("Users").document(it) }
+        ref?.get()?.addOnSuccessListener {
+            if (it != null) {
+                val accessLevel = it.data?.get("accessLevel").toString()
+                if (accessLevel == "0") {
+                    if (firebaseAuth.currentUser!!.isEmailVerified) {
                         val intent = Intent(activity, MainActivity::class.java)
                         startActivity(intent)
                         activity?.finish()
-                    } else if (accessLevel == "1") {
-                        val intent = Intent(activity, GroundAdminActivity::class.java)
-                        startActivity(intent)
-                        activity?.finish()
                     } else {
-                        val intent = Intent(activity, OverallAdminActivity::class.java)
-                        startActivity(intent)
-                        activity?.finish()
+                        binding.tfLoginEmail.error = "Please verify your email"
                     }
+                } else if (accessLevel == "1") {
+                    val intent = Intent(activity, GroundAdminActivity::class.java)
+                    startActivity(intent)
+                    activity?.finish()
+                } else {
+                    val intent = Intent(activity, OverallAdminActivity::class.java)
+                    startActivity(intent)
+                    activity?.finish()
                 }
             }
-                ?.addOnFailureListener {
-                    Log.i("mytag", "fail")
-                }
-        } else {
-            binding.tfLoginEmail.error = "Please verify your email"
         }
+            ?.addOnFailureListener {
+                Log.i("mytag", "fail")
+            }
     }
 
+
     //remember login
-    /*override fun onStart() {
+    override fun onStart() {
         super.onStart()
         if (firebaseAuth.currentUser != null) {
-            if (firebaseAuth.currentUser!!.isEmailVerified) {
-                checkAccessLevel()
-            } else {
-                binding.tfLoginEmail.error = "Please verify your email"
-            }
+            checkAccessLevel()
         }
-    }*/
+    }
 }

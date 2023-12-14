@@ -92,7 +92,7 @@
             android:layout_below="@+id/ivGroundImage"
             android:layout_alignParentRight="true"
             android:paddingLeft="5dp"
-            android:paddingTop="28dp"
+            android:paddingTop="26dp"
             android:paddingEnd="20dp"
             android:paddingBottom="6dp"
             android:text="Price"

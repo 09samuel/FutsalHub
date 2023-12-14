@@ -49,8 +49,7 @@
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:textColor="@color/white"
-            android:fontFamily="@font/gotham_medium_"
-            />
+            android:fontFamily="@font/gotham_medium_" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -81,8 +80,7 @@
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:textColor="@color/white"
-            android:fontFamily="@font/gotham_medium_"
-            />
+            android:fontFamily="@font/gotham_medium_" />
 
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -115,8 +113,7 @@
             android:layout_height="wrap_content"
             android:inputType="textPassword"
             android:textColor="@color/white"
-            android:fontFamily="@font/gotham_medium_"
-            />
+            android:fontFamily="@font/gotham_medium_" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -148,8 +145,7 @@
             android:inputType="textPassword"
             android:layout_height="wrap_content"
             android:textColor="@color/white"
-            android:fontFamily="@font/gotham_medium_"
-            />
+            android:fontFamily="@font/gotham_medium_" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -182,23 +178,23 @@
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.334"
+        app:layout_constraintHorizontal_bias="0.385"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.946" />
 
     <TextView
-        android:fontFamily="@font/gotham_book"
-
         android:id="@+id/tvSignIn"
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/gotham_book"
         android:text="Sign In"
         android:textColor="@color/green"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.732"
+        app:layout_constraintHorizontal_bias="0.763"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.946" />

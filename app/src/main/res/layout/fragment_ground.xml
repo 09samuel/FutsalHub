@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent">
+
 
     <ScrollView
         android:layout_width="match_parent"
@@ -10,7 +12,8 @@
         app:layout_constraintBottom_toTopOf="@+id/constraintLayout2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@color/bgblack">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -19,7 +22,22 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="657dp">
+
+                <TextView
+                    android:id="@+id/tvOvr"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/ic_star"
+                    android:fontFamily="@font/gotham_book"
+                    android:text="rating"
+                    android:textColor="@color/light_white"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.111"
+                    app:layout_constraintStart_toEndOf="@+id/tvGround"
+                    app:layout_constraintTop_toBottomOf="@+id/viewFlipper"
+                    app:layout_constraintVertical_bias="0.078" />
 
                 <ImageView
                     android:id="@+id/imageView4"
@@ -33,23 +51,13 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_bias="0.0" />
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/constraintLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="24dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="24dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"/>
-
                 <ViewFlipper
                     android:id="@+id/viewFlipper"
                     android:layout_width="match_parent"
-                    android:layout_height="250dp"
+                    android:layout_height="234dp"
+                    android:layout_marginTop="16dp"
                     android:autoStart="true"
-                    android:flipInterval="4000"
+                    android:flipInterval="6000"
                     android:inAnimation="@android:anim/slide_in_left"
                     android:outAnimation="@android:anim/slide_out_right"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -80,74 +88,56 @@
 
                 <TextView
                     android:id="@+id/tvGround"
-                    android:layout_width="210dp"
-                    android:layout_height="40dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
                     android:layout_marginTop="278dp"
-                    android:layout_marginEnd="228dp"
-                    android:gravity="center"
-                    android:text="Rosa Arena"
-                    android:textSize="23dp"
+                    android:fontFamily="@font/gotham_medium_"
+                    android:text="Ground name"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/green"
+                    android:textSize="23sp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/imageView4"
                     app:layout_constraintVertical_bias="0.0" />
-
-                <RatingBar
-                    android:id="@+id/ratingBar4"
-                    style="?android:attr/ratingBarStyleSmall"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:numStars="1"
-                    android:progressTint="#FFC106"
-                    android:rating="4"
-                    android:scaleX="2"
-                    android:scaleY="2"
-                    app:layout_constraintBottom_toTopOf="@+id/tvDesc"
-                    app:layout_constraintEnd_toEndOf="@+id/tvGround"
-                    app:layout_constraintHorizontal_bias="0.93"
-                    app:layout_constraintStart_toStartOf="@+id/imageView4"
-                    app:layout_constraintTop_toBottomOf="@+id/viewFlipper"
-                    app:layout_constraintVertical_bias="0.23000002" />
-
-                <TextView
-                    android:id="@+id/tvOvr"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="4.5/5"
-                    app:layout_constraintBottom_toTopOf="@+id/tvDesc"
-                    app:layout_constraintEnd_toEndOf="@+id/imageView4"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toEndOf="@+id/tvGround"
-                    app:layout_constraintTop_toBottomOf="@+id/viewFlipper"
-                    app:layout_constraintVertical_bias="0.23000002" />
 
                 <TextView
                     android:id="@+id/tvLocation"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:fontFamily="@font/gotham_book"
                     android:text="Location"
+                    android:drawableStart="@drawable/ic_location"
+                    android:textColor="@color/light_white"
                     app:layout_constraintBottom_toTopOf="@+id/tvDesc"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.06"
+                    app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tvGround"
-                    app:layout_constraintVertical_bias="0.17000002" />
+                    app:layout_constraintVertical_bias="0.0" />
 
                 <TextView
                     android:id="@+id/tvDesc"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="24dp"
-                    android:layout_marginEnd="24dp"
+                    android:layout_marginTop="24dp"
+                    android:paddingEnd="48dp"
+                    android:fontFamily="@font/gotham_book"
                     android:inputType="textMultiLine"
-                    android:text="blah blah blah"
+                    android:text="Description"
+                    android:textColor="@color/light_white"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/viewFlipper" />
+                    app:layout_constraintTop_toBottomOf="@+id/viewFlipper"
+                    app:layout_constraintVertical_bias="0.241" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -158,16 +148,18 @@
         android:id="@+id/constraintLayout2"
         android:layout_width="match_parent"
         android:layout_height="78dp"
-        android:background="#EAEAEA"
+        android:background="@color/grey"
         app:layout_constraintBottom_toBottomOf="parent">
 
-        <androidx.appcompat.widget.AppCompatButton
+        <Button
             android:id="@+id/button2"
             android:layout_width="220dp"
             android:layout_height="60dp"
             android:layout_marginEnd="8dp"
             android:text="BOOK"
-
+            android:fontFamily="@font/gotham_medium_"
+android:backgroundTint="@color/green"
+            android:textColor="@color/black"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.95"
@@ -180,6 +172,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:text="Total Price"
+            android:fontFamily="@font/gotham_medium_"
+            android:textColor="@color/green"
             android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
@@ -190,10 +184,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
-            android:text="₹1000"
-            android:textSize="17sp"
+            android:fontFamily="@font/gotham_medium_"
+            android:text="Amount"
+            android:textColor="@color/green"
+            android:textSize="34sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@+id/button2"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/button2"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.775" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

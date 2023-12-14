@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/loginLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -12,9 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/gotham_bold"
-
         android:text="Login"
-
         android:textColor="@color/white"
         android:textSize="70sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -93,7 +90,6 @@
         android:backgroundTint="@color/green"
         android:fontFamily="@font/gotham_medium_"
         android:text="LOGIN"
-
         android:textAllCaps="true"
         android:textColor="#000000"
         android:textSize="14sp"
@@ -124,12 +120,11 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/gotham_book"
         android:text="Don't have an account?   "
-
         android:textColor="@color/white"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.316"
+        app:layout_constraintHorizontal_bias="0.393"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.946" />
@@ -141,11 +136,10 @@
         android:fontFamily="@font/gotham_book"
         android:text="Sign Up"
         android:textColor="@color/green"
-
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.705"
+        app:layout_constraintHorizontal_bias="0.757"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.946" />
