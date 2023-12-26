@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/bottom_sheet"
     android:layout_width="wrap_content"
@@ -17,15 +16,15 @@
         android:padding="22dp" />
 
     <TextView
-        android:fontFamily="@font/gotham_medium_"
-        android:textColor="@color/green"
         android:id="@+id/tv_sort"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/drag_handle"
+        android:fontFamily="@font/gotham_medium_"
         android:paddingLeft="20dp"
         android:paddingBottom="20dp"
         android:text="Sort By"
+        android:textColor="@color/green"
         android:textSize="20sp" />
 
     <com.google.android.material.button.MaterialButtonToggleGroup
@@ -67,66 +66,66 @@
     </com.google.android.material.button.MaterialButtonToggleGroup>
 
     <TextView
-        android:fontFamily="@font/gotham_medium_"
-        android:textColor="@color/green"
         android:id="@+id/tv_filter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/toggleButton"
+        android:fontFamily="@font/gotham_medium_"
         android:paddingLeft="20dp"
         android:paddingTop="30dp"
         android:paddingBottom="5dp"
         android:text="Filter By"
+        android:textColor="@color/green"
         android:textSize="20sp" />
 
     <TextView
-        android:fontFamily="@font/gotham_book"
-        android:textColor="@color/light_white"
         android:id="@+id/tv_availibility"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tv_filter"
+        android:fontFamily="@font/gotham_book"
         android:paddingLeft="20dp"
         android:paddingBottom="16dp"
         android:text="Availibility"
+        android:textColor="@color/light_white"
         android:textSize="16sp" />
 
     <EditText
         android:id="@+id/editTextDate"
         android:layout_width="171dp"
-        android:fontFamily="@font/gotham_book"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tv_availibility"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="0dp"
         android:layout_marginRight="20dp"
         android:ems="10"
-        android:textColorHint="@color/light_white"
+        android:fontFamily="@font/gotham_book"
         android:hint="Enter Date"
-        android:inputType="date"/>
+        android:inputType="date"
+        android:textColorHint="@android:color/darker_gray" />
 
     <EditText
         android:id="@+id/editTextTime"
         android:layout_width="110dp"
-        android:textColorHint="@color/light_white"
-        android:fontFamily="@font/gotham_book"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tv_availibility"
         android:layout_toRightOf="@+id/editTextDate"
         android:ems="10"
+        android:fontFamily="@font/gotham_book"
         android:hint="Enter Time"
-        android:inputType="time" />
+        android:inputType="time"
+        android:textColorHint="@android:color/darker_gray" />
 
     <TextView
-        android:fontFamily="@font/gotham_book"
-        android:textColor="@color/light_white"
         android:id="@+id/tv_location"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/divider_1"
+        android:fontFamily="@font/gotham_book"
         android:paddingLeft="20dp"
         android:paddingBottom="16dp"
         android:text="Location"
+        android:textColor="@color/light_white"
         android:textSize="16sp" />
 
     <com.google.android.material.chip.ChipGroup
@@ -169,19 +168,19 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/editTextDate"
         android:layout_marginTop="8dp"
-        app:dividerColor="@color/lightblack"
-        android:layout_marginBottom="4dp" />
+        android:layout_marginBottom="4dp"
+        app:dividerColor="@color/lightblack" />
 
     <TextView
-        android:fontFamily="@font/gotham_book"
-        android:textColor="@color/light_white"
         android:id="@+id/tv_type"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/divider_2"
+        android:fontFamily="@font/gotham_book"
         android:paddingLeft="20dp"
         android:paddingBottom="16dp"
         android:text="Type Of Ground"
+        android:textColor="@color/light_white"
         android:textSize="16sp" />
 
     <com.google.android.material.chip.ChipGroup
@@ -224,35 +223,42 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/chipGroup"
         android:layout_marginTop="8dp"
-        app:dividerColor="@color/lightblack"
-        android:layout_marginBottom="4dp" />
+        android:layout_marginBottom="4dp"
+        app:dividerColor="@color/lightblack" />
 
-    <Button
-        android:textColor="@color/green"
-        android:id="@+id/btn_cancel"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Cancel"
-        android:layout_below="@+id/chipGroup2"
-        android:layout_marginTop="30dp"
-        android:fontFamily="@font/gotham_medium_"
-        style="?attr/materialButtonOutlinedStyle"
-        android:layout_marginBottom="20dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginLeft="180dp"/>
+        android:layout_below="@+id/chipGroup2">
 
-    <Button
-        android:textColor="@color/black"
-        android:backgroundTint="@color/green"
-        android:id="@+id/btn_apply"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Apply"
-        android:layout_below="@+id/chipGroup2"
-        android:layout_toRightOf="@+id/btn_cancel"
-        android:layout_marginTop="30dp"
-        android:fontFamily="@font/gotham_medium_"
-        android:layout_marginBottom="20dp"
-        android:layout_marginRight="16dp" />
 
+        <Button
+            android:id="@+id/btn_cancel"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/chipGroup2"
+            android:layout_marginStart="190dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="20dp"
+            android:fontFamily="@font/gotham_medium_"
+            android:text="Cancel"
+            android:textColor="@color/green" />
+
+        <Button
+            android:id="@+id/btn_apply"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/chipGroup2"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="20dp"
+            android:layout_toRightOf="@+id/btn_cancel"
+            android:backgroundTint="@color/green"
+            android:fontFamily="@font/gotham_medium_"
+            android:text="Apply"
+            android:textColor="@color/black" />
+    </LinearLayout>
 </RelativeLayout>

@@ -14,7 +14,6 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions
 class GroundListAdapter(
     options: FirestoreRecyclerOptions<GroundListModel>,
     private val handleUserData: (GroundListModel) -> Unit
-
 ) :
 
     FirestoreRecyclerAdapter<GroundListModel, GroundListAdapter.GroundAdapterVH>(options) {
