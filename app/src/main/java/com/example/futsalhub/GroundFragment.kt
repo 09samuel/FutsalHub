@@ -12,7 +12,6 @@ import com.example.futsalhub.databinding.CalendarBinding
 import com.example.futsalhub.databinding.FragmentGroundBinding
 import com.google.firebase.firestore.FirebaseFirestore
 import com.kizitonwose.calendar.core.WeekDay
-import com.kizitonwose.calendar.core.firstDayOfWeekFromLocale
 import com.kizitonwose.calendar.view.ViewContainer
 import com.kizitonwose.calendar.view.WeekDayBinder
 import java.time.LocalDate
@@ -38,18 +37,60 @@ class GroundFragment : Fragment() {
 
         (activity as AppCompatActivity).supportActionBar?.title = "Book your ground"
 
-        setFragmentResultListener("requestKey") { requestKey, bundle ->
+
+
+        setFragmentResultListener("requestKey") { _, bundle ->
             groundId = bundle.getString("bundleKey").toString()
 
             db = FirebaseFirestore.getInstance()
             val ref = db.collection("FutsalGrounds").document(groundId)
-            ref.get().addOnSuccessListener {
-                if (it != null) {
-                    binding.tvDesc.text = it.data?.get("description").toString()
-                    binding.tvOvr.text = it.data?.get("ovrRating").toString()
-                    binding.tvGround.text = it.data?.get("groundName").toString()
-                    binding.tvLocation.text = it.data?.get("location").toString()
-                    binding.tvPrice.text = "₹" + it.data?.get("minPrice").toString()
+            ref.get().addOnSuccessListener {document->
+                val timeSlotsList: Map<String, Any>
+                val finalTimeList = mutableListOf<String>()
+                val priceList:  Map<String, Any>
+                val finalPriceList= mutableListOf<String>()
+
+                if (document != null) {
+                    binding.tvDesc.text = document.data?.get("description").toString()
+                    binding.tvOvr.text = document.data?.get("ovrRating").toString()
+                    binding.tvGround.text = document.data?.get("groundName").toString()
+                    binding.tvLocation.text = document.data?.get("location").toString()
+                    binding.tvPrice.text = "₹" + document.data?.get("minPrice").toString()
+
+                    timeSlotsList = document.data?.get("timeSlots") as Map<String, Any>
+                    timeSlotsList?.let {
+                        // Iterate through the map and add values to the list
+                        for ((_, value) in it) {
+                            if (value is String) {
+                                finalTimeList.add(value)
+                            }
+                        }
+                    }
+                    finalTimeList.sort()
+
+                    //document.data["slots"] as? Map<String, Any>
+                    priceList = document.data?.get("price") as Map<String, Any>
+                    priceList?.let {
+                        // Iterate through the map and add values to the list
+                        for ((_, value) in it) {
+                            if (value is String) {
+                                finalPriceList.add(value)
+                            }
+                        }
+                    }
+                    finalPriceList.sort()
+
+                    val gridView = binding.gvTimeSlots
+                    val adapter = TimeSlotsAdapter(requireContext(),finalTimeList,finalPriceList)
+                    gridView.adapter = adapter
+
+                    adapter.setOnItemClickListener { timeSlot, _ ->
+                        //db.collection("FutsalGrounds/")
+                        enableBookButton()
+
+                        // Handle item click here
+                        // You have access to the clicked time slot and price
+                    }
                 }
             }
 
@@ -59,11 +100,13 @@ class GroundFragment : Fragment() {
 
                 init {
                     view.setOnClickListener {
-                        if (selectedDate != day.date) {
-                            val oldDate = selectedDate
-                            selectedDate = day.date
-                            binding.exSevenCalendar.notifyDateChanged(day.date)
-                            oldDate?.let { binding.exSevenCalendar.notifyDateChanged(it) }
+                        if(bind.exSevenDayText.alpha.toInt() ==1){
+                            if (selectedDate != day.date) {
+                                val oldDate = selectedDate
+                                selectedDate = day.date
+                                binding.exSevenCalendar.notifyDateChanged(day.date)
+                                oldDate?.let { binding.exSevenCalendar.notifyDateChanged(it) }
+                            }
                         }
                     }
                 }
@@ -86,24 +129,28 @@ class GroundFragment : Fragment() {
 
             binding.exSevenCalendar.dayBinder = object : WeekDayBinder<DayViewContainer> {
                 override fun create(view: View) = DayViewContainer(view)
-                override fun bind(container: DayViewContainer, data: WeekDay) = container.bind(data)
+                override fun bind(container: DayViewContainer, data: WeekDay){
+                    container.bind(data)
+                    container.bind.exSevenDayText.alpha=if(LocalDate.now()<= data.date && LocalDate.now().plusDays(2)>=data.date) 1f else 0.3f
+                    container.bind.exSevenDateText.alpha=if(LocalDate.now()<= data.date && LocalDate.now().plusDays(2)>=data.date) 1f else 0.3f
+                }
             }
 
-            /*binding.exSevenCalendar.weekScrollListener = { weekDays ->
-                binding.exSevenToolbar.title = getWeekPageTitle(weekDays)
-            }*/
-
-            //val currentMonth = YearMonth.now()
             val currentDate = LocalDate.now()
             binding.exSevenCalendar.setup(
-                currentDate,
-                currentDate.plusDays(6),
-                firstDayOfWeekFromLocale(),
+                currentDate.minusDays(2),
+                currentDate.plusDays(4),
+                currentDate.minusDays(2).dayOfWeek,
             )
             binding.exSevenCalendar.scrollToDate(LocalDate.now())
         }
 
         return binding.root
+    }
+
+    private fun enableBookButton() {
+        binding.btnBook.isClickable=true
+        binding.btnBook.alpha=1.0f
     }
 
 }

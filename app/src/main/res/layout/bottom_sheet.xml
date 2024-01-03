@@ -28,12 +28,11 @@
         android:textSize="20sp" />
 
     <com.google.android.material.button.MaterialButtonToggleGroup
-        android:id="@+id/toggleButton"
+        android:id="@+id/tbSort"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tv_sort"
         android:layout_centerInParent="true"
-        android:backgroundTint="@color/green"
         app:selectionRequired="true"
         app:singleSelection="true">
 
@@ -69,7 +68,7 @@
         android:id="@+id/tv_filter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/toggleButton"
+        android:layout_below="@+id/tbSort"
         android:fontFamily="@font/gotham_medium_"
         android:paddingLeft="20dp"
         android:paddingTop="30dp"
@@ -78,43 +77,56 @@
         android:textColor="@color/green"
         android:textSize="20sp" />
 
+
     <TextView
-        android:id="@+id/tv_availibility"
+        android:id="@+id/tv_price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tv_filter"
         android:fontFamily="@font/gotham_book"
         android:paddingLeft="20dp"
         android:paddingBottom="16dp"
-        android:text="Availibility"
+        android:text="Price"
         android:textColor="@color/light_white"
         android:textSize="16sp" />
 
-    <EditText
-        android:id="@+id/editTextDate"
-        android:layout_width="171dp"
+    <SeekBar
+        android:id="@+id/sb_price"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_availibility"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="0dp"
-        android:layout_marginRight="20dp"
-        android:ems="10"
-        android:fontFamily="@font/gotham_book"
-        android:hint="Enter Date"
-        android:inputType="date"
-        android:textColorHint="@android:color/darker_gray" />
+        android:layout_below="@id/tv_price"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="2dp"
+        android:max="2000"
+        android:progress="0"
+        android:thumbTint="@color/green"/>
 
-    <EditText
-        android:id="@+id/editTextTime"
-        android:layout_width="110dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_availibility"
-        android:layout_toRightOf="@+id/editTextDate"
-        android:ems="10"
+
+    <TextView
+        android:text="₹0"
+        android:id="@+id/tv_zero"
+        android:textColor="@color/light_white"
+        android:layout_marginStart="30dp"
+        android:layout_below="@id/sb_price"
+        android:layout_marginBottom="10dp"
         android:fontFamily="@font/gotham_book"
-        android:hint="Enter Time"
-        android:inputType="time"
-        android:textColorHint="@android:color/darker_gray" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:text="₹2000"
+        android:fontFamily="@font/gotham_book"
+        android:id="@+id/tv_last"
+        android:layout_alignParentRight="true"
+        android:textColor="@color/light_white"
+        android:paddingEnd="30dp"
+        android:layout_below="@id/sb_price"
+        android:layout_marginBottom="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
 
     <TextView
         android:id="@+id/tv_location"
@@ -129,7 +141,7 @@
         android:textSize="16sp" />
 
     <com.google.android.material.chip.ChipGroup
-        android:id="@+id/chipGroup"
+        android:id="@+id/chpGrpLocation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tv_location"
@@ -138,11 +150,10 @@
         app:singleLine="true">
 
         <com.google.android.material.chip.Chip
-            android:id="@+id/chip_1"
+            android:id="@+id/chpNorthGoa"
             style="@style/Widget.Material3.Chip.Filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:checked="true"
             android:fontFamily="@font/gotham_book"
             android:shadowColor="@color/grey"
             android:text="North Goa"
@@ -150,11 +161,10 @@
             app:chipBackgroundColor="@color/green" />
 
         <com.google.android.material.chip.Chip
-            android:id="@+id/chip_2"
+            android:id="@+id/chpSouthGoa"
             style="@style/Widget.Material3.Chip.Filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:checked="true"
             android:fontFamily="@font/gotham_book"
             android:text="South Goa"
             android:textColor="@color/black"
@@ -166,7 +176,7 @@
         android:id="@+id/divider_1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/editTextDate"
+        android:layout_below="@id/tv_zero"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="4dp"
         app:dividerColor="@color/lightblack" />
@@ -184,7 +194,7 @@
         android:textSize="16sp" />
 
     <com.google.android.material.chip.ChipGroup
-        android:id="@+id/chipGroup2"
+        android:id="@+id/chpGrpType"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tv_type"
@@ -194,53 +204,59 @@
         app:singleLine="true">
 
         <com.google.android.material.chip.Chip
-            android:id="@+id/chip2_1"
+            android:id="@+id/chpFive"
             style="@style/Widget.Material3.Chip.Filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:checked="true"
             android:fontFamily="@font/gotham_book"
             android:text="5-a side"
             android:textColor="@color/black"
             app:chipBackgroundColor="@color/green" />
 
         <com.google.android.material.chip.Chip
-            android:id="@+id/chip2_2"
+            android:id="@+id/chpSix"
             style="@style/Widget.Material3.Chip.Filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:checked="true"
             android:fontFamily="@font/gotham_book"
             android:text="6-a side"
             android:textColor="@color/black"
             app:chipBackgroundColor="@color/green" />
 
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chpSeven"
+            style="@style/Widget.Material3.Chip.Filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/gotham_book"
+            android:text="7-a side"
+            android:textColor="@color/black"
+            app:chipBackgroundColor="@color/green" />
     </com.google.android.material.chip.ChipGroup>
 
     <com.google.android.material.divider.MaterialDivider
         android:id="@+id/divider_2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/chipGroup"
+        android:layout_below="@+id/chpGrpLocation"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="4dp"
         app:dividerColor="@color/lightblack" />
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/chipGroup2">
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/chpGrpType">
 
 
         <Button
             android:id="@+id/btn_cancel"
             style="?attr/materialButtonOutlinedStyle"
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/chipGroup2"
-            android:layout_marginStart="190dp"
             android:layout_marginTop="30dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginEnd="10dp"
             android:layout_marginBottom="20dp"
             android:fontFamily="@font/gotham_medium_"
             android:text="Cancel"
@@ -248,17 +264,15 @@
 
         <Button
             android:id="@+id/btn_apply"
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/chipGroup2"
-            android:layout_alignParentEnd="true"
-            android:layout_marginStart="10dp"
+            android:layout_marginEnd="14dp"
             android:layout_marginTop="30dp"
             android:layout_marginBottom="20dp"
-            android:layout_toRightOf="@+id/btn_cancel"
             android:backgroundTint="@color/green"
             android:fontFamily="@font/gotham_medium_"
             android:text="Apply"
             android:textColor="@color/black" />
     </LinearLayout>
+
 </RelativeLayout>

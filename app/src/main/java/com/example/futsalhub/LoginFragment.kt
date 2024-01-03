@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
@@ -107,6 +108,7 @@ class LoginFragment : Fragment() {
     }
 
     private fun checkAccessLevel() {
+        showLoading()
         db = FirebaseFirestore.getInstance()
         val uid = FirebaseAuth.getInstance().currentUser?.uid
         val ref = uid?.let { db.collection("Users").document(it) }
@@ -135,6 +137,24 @@ class LoginFragment : Fragment() {
             ?.addOnFailureListener {
                 Log.i("mytag", "fail")
             }
+        dismissLoading()
+    }
+
+    private fun showLoading() {
+        binding.overlayView.visibility = View.VISIBLE
+
+        // Disable interaction
+        requireActivity().window.setFlags(
+            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
+        )
+    }
+
+    private fun dismissLoading() {
+        binding.overlayView.visibility = View.GONE
+
+        // Enable interaction
+        requireActivity().window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
     }
 
 
