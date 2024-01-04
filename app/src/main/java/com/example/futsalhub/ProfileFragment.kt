@@ -7,7 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResult
 import androidx.navigation.fragment.findNavController
 import com.example.futsalhub.databinding.FragmentProfileBinding
 import com.google.firebase.auth.FirebaseAuth
@@ -17,6 +19,7 @@ class ProfileFragment : Fragment() {
     private lateinit var binding: FragmentProfileBinding
     private lateinit var firebaseAuth : FirebaseAuth
     private lateinit var db : FirebaseFirestore
+    private lateinit var userName :String
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,11 +40,19 @@ class ProfileFragment : Fragment() {
                     if (it.data != null) {
                         binding.tvEmail.text = it.data?.get("email").toString()
                         binding.tvName.text = it.data?.get("userName").toString()
+                        userName=it.data?.get("userName").toString()
                     }
                 }
         }
 
        binding.tvEditProfile.setOnClickListener{
+           setFragmentResult(
+               "requestKey",
+               bundleOf(
+                   "uid" to uid,
+                   "userName" to userName,
+                   )
+           )
            findNavController().navigate(R.id.action_profileScreen_to_editProfileFragment)
        }
 

@@ -21,7 +21,16 @@
             android:id="@+id/groundScreen"
             android:name="com.example.futsalhub.GroundFragment"
             android:label="fragment_bookground"
-            tools:layout="@layout/fragment_ground" />
+            tools:layout="@layout/fragment_ground" >
+            <action
+                android:id="@+id/action_groundScreen_to_paymentFragment"
+                app:destination="@id/paymentFragment" />
+        </fragment>
+        <fragment
+            android:id="@+id/paymentFragment"
+            android:name="com.example.futsalhub.PaymentFragment"
+            android:label="fragment_payment"
+            tools:layout="@layout/fragment_payment" />
     </navigation>
 
 

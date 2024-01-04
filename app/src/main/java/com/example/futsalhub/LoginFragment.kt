@@ -29,6 +29,8 @@ class LoginFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentLoginBinding.inflate(inflater, container, false)
+        dismissLoading()
+
         firebaseAuth = FirebaseAuth.getInstance()
 
         binding.btnLogin.setOnClickListener {
@@ -38,6 +40,7 @@ class LoginFragment : Fragment() {
             if (email.isNotEmpty() && password.isNotEmpty()) {
                 firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener {
                     if (it.isSuccessful) {
+                        showLoading()
                         checkAccessLevel()
                     } else {
                         try {
@@ -108,7 +111,6 @@ class LoginFragment : Fragment() {
     }
 
     private fun checkAccessLevel() {
-        showLoading()
         db = FirebaseFirestore.getInstance()
         val uid = FirebaseAuth.getInstance().currentUser?.uid
         val ref = uid?.let { db.collection("Users").document(it) }
@@ -120,6 +122,7 @@ class LoginFragment : Fragment() {
                         val intent = Intent(activity, MainActivity::class.java)
                         startActivity(intent)
                         activity?.finish()
+                        dismissLoading()
                     } else {
                         binding.tfLoginEmail.error = "Please verify your email"
                     }
@@ -127,17 +130,18 @@ class LoginFragment : Fragment() {
                     val intent = Intent(activity, GroundAdminActivity::class.java)
                     startActivity(intent)
                     activity?.finish()
+                    dismissLoading()
                 } else {
                     val intent = Intent(activity, OverallAdminActivity::class.java)
                     startActivity(intent)
                     activity?.finish()
+                    //dismissLoading()
                 }
             }
         }
             ?.addOnFailureListener {
                 Log.i("mytag", "fail")
             }
-        dismissLoading()
     }
 
     private fun showLoading() {

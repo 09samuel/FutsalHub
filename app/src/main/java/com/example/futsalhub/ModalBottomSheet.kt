@@ -24,17 +24,18 @@ import kotlinx.coroutines.launch
 class ModalBottomSheet : BottomSheetDialogFragment() {
     private lateinit var binding: BottomSheetBinding
     private lateinit var selectedSort: String
-    private lateinit var priceFilter: String
     private lateinit var listener: SortAndFilterListener
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private var latitude: Double = 0.0
     private var longitude: Double = 0.0
+    private lateinit var priceFilter: String
     private val checkedLocations: MutableList<String> = mutableListOf()
     private val checkedTypes: MutableList<String> = mutableListOf()
 
     private val dataStore: DataStore<Preferences> by lazy {
         requireContext().createDataStore(name = "settings")
     }
+
     fun setSortAndFilterListener(listener: SortAndFilterListener) {
         this.listener = listener
     }
@@ -49,50 +50,59 @@ class ModalBottomSheet : BottomSheetDialogFragment() {
 
         lifecycleScope.launch {
             try {
-                val values = read(listOf("sortval", "checkedLocations", "checkedTypes"))
-                selectedSort= values["sortval"].toString()
+                val values =
+                    read(listOf("sortval", "priceFilter", "checkedLocations", "checkedTypes"))
+                selectedSort = values["sortval"].toString()
 
-                Log.i("tag123",selectedSort)
 
                 when (selectedSort) {
                     "ovrRating" -> {
                         binding.tbSort.check(R.id.sort_rating)
                     }
+
                     "distance" -> {
                         binding.tbSort.check(R.id.sort_distance)
                     }
+
                     else -> {
                         binding.tbSort.check(R.id.sort_name)
                     }
                 }
 
-                val locations: List<String> = values["checkedLocations"]!!.removeSurrounding("[", "]").split(", ")
-                val totalLocations: List<String> = listOf("North Goa","South Goa")
-                val subLocations= totalLocations.subtract(locations)
+                //priceFilter = values["priceFilter"].toString()
+                Log.i("price123",priceFilter)
+                binding.sbPrice.progress = priceFilter.toInt()
 
-                for(l in subLocations){
-                    if(l=="North Goa"){
-                        binding.chpNorthGoa.isChecked=false
-                    }
-                    else if (l=="South Goa"){
-                        binding.chpSouthGoa.isChecked=false
+                val locations: List<String> =
+                    values["checkedLocations"]!!.removeSurrounding("[", "]").split(", ")
+                val totalLocations: List<String> = listOf("North Goa", "South Goa")
+                val subLocations = totalLocations.subtract(locations)
+
+                for (l in subLocations) {
+                    if (l == "North Goa") {
+                        binding.chpNorthGoa.isChecked = false
+                    } else if (l == "South Goa") {
+                        binding.chpSouthGoa.isChecked = false
                     }
                 }
 
-                val types: List<String> = values["checkedTypes"]!!.removeSurrounding("[", "]").split(", ")
-                val totalTypes: List<String> = listOf("5-a side","6-a side","7-a side")
-                val subTypes= totalTypes.subtract(types.toSet())
+                val types: List<String> =
+                    values["checkedTypes"]!!.removeSurrounding("[", "]").split(", ")
+                val totalTypes: List<String> = listOf("5-a side", "6-a side", "7-a side")
+                val subTypes = totalTypes.subtract(types.toSet())
 
-                for(t in subTypes){
-                    when (t){
-                        "5-a side"->{
-                            binding.chpFive.isChecked=false
+                for (t in subTypes) {
+                    when (t) {
+                        "5-a side" -> {
+                            binding.chpFive.isChecked = false
                         }
-                        "6-a side"->{
-                            binding.chpSix.isChecked=false
+
+                        "6-a side" -> {
+                            binding.chpSix.isChecked = false
                         }
-                        "7-a side"->{
-                            binding.chpSeven.isChecked=false
+
+                        "7-a side" -> {
+                            binding.chpSeven.isChecked = false
                         }
                     }
                 }
@@ -102,13 +112,13 @@ class ModalBottomSheet : BottomSheetDialogFragment() {
         }
 
         defaultFilters()
-
+        Log.i("atdefa1234",priceFilter)
         checkSort()
-
-        binding.sbPrice.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener{
+        Log.i("atdefa1235",priceFilter)
+        binding.sbPrice.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
-                binding.tvLast.text="₹"+progress.toString()
-                priceFilter=progress.toString()
+                binding.tvLast.text = "₹" + progress.toString()
+                priceFilter = progress.toString()
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar) {
@@ -135,6 +145,7 @@ class ModalBottomSheet : BottomSheetDialogFragment() {
             lifecycleScope.launch {
                 val keyValues = mapOf(
                     "sortval" to selectedSort,
+                    "priceFilter" to priceFilter,
                     "checkedLocations" to checkedLocations,
                     "checkedTypes" to checkedTypes
                 )
@@ -146,21 +157,25 @@ class ModalBottomSheet : BottomSheetDialogFragment() {
     }
 
     private fun defaultFilters() {
-        if(!binding.chpNorthGoa.isChecked && !binding.chpSouthGoa.isChecked){
+        if (!binding.chpNorthGoa.isChecked && !binding.chpSouthGoa.isChecked) {
             binding.chpGrpLocation.check(R.id.chpNorthGoa)
             binding.chpGrpLocation.check(R.id.chpSouthGoa)
-
         }
 
-        if(!binding.chpFive.isChecked && !binding.chpSix.isChecked && !binding.chpSeven.isChecked){
+        if (!binding.chpFive.isChecked && !binding.chpSix.isChecked && !binding.chpSeven.isChecked) {
             binding.chpGrpType.check(R.id.chpFive)
             binding.chpGrpType.check(R.id.chpSix)
             binding.chpGrpType.check(R.id.chpSeven)
         }
+
+        if(binding.sbPrice.progress==0){
+            binding.sbPrice.progress=2000
+            priceFilter="2000"
+        }
     }
-    
-    private suspend fun save(keyValuePairs: Map<String, Any>){
-        dataStore.edit { settings->
+
+    private suspend fun save(keyValuePairs: Map<String, Any>) {
+        dataStore.edit { settings ->
             keyValuePairs.forEach { (key, value) ->
                 settings[preferencesKey<String>(key)] = value.toString()
             }
@@ -236,14 +251,12 @@ class ModalBottomSheet : BottomSheetDialogFragment() {
                 arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),
                 1001
             )
-            Log.i("location123", "done")
             return
         }
         task.addOnSuccessListener {
             if (it != null) {
                 latitude = it.latitude
                 longitude = it.longitude
-                Log.i("location123", it.latitude.toString() + it.longitude.toString())
             }
         }
     }
@@ -254,7 +267,7 @@ class ModalBottomSheet : BottomSheetDialogFragment() {
             sortType: String,
             latitude: Double,
             longitude: Double,
-            priceFilter: String,
+            filterPrice: String,
             filterLocations: MutableList<String>,
             filterType: MutableList<String>
         )

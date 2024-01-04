@@ -44,7 +44,7 @@ class MyAdapter(private val dataList: List<HashMap<String, Any?>>, private val o
         holder.groundName.text = currentItem["groundName"].toString()
         holder.ovrRating.text = currentItem["ovrRating"].toString()
         holder.location.text = currentItem["location"].toString()
-        holder.minPrice.text = currentItem["minPrice"].toString()
+        holder.minPrice.text = "₹"+currentItem["minPrice"].toString()
         Glide.with(holder.itemView).load(currentItem["groundImg"].toString()).into(holder.groundImg)
 
         // Set other views with respective fields from the HashMap

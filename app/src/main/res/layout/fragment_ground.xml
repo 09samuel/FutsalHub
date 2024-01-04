@@ -151,7 +151,7 @@
             <GridView
                 android:id="@+id/gvTimeSlots"
                 android:layout_width="match_parent"
-                android:layout_height="400dp"
+                android:layout_height="280dp"
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="40dp"
                 android:layout_marginEnd="24dp"
@@ -180,8 +180,6 @@
 
         <Button
             android:id="@+id/btnBook"
-            android:clickable="false"
-            android:alpha="0.5"
             android:layout_width="220dp"
             android:layout_height="60dp"
             android:layout_marginEnd="8dp"
@@ -214,7 +212,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:fontFamily="@font/gotham_medium_"
-            android:text="Amount"
+            android:text="₹0"
             android:textColor="@color/green"
             android:textSize="32sp"
             android:textStyle="bold"

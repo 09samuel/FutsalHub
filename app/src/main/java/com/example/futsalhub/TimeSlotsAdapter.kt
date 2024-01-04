@@ -6,20 +6,24 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
+import java.util.SortedMap
 
-class TimeSlotsAdapter(private val context: Context, private val timeSlotsList: List<String>, private val priceList: List<String>) : BaseAdapter() {
+class TimeSlotsAdapter(private val context: Context, private val timeData: SortedMap<String, Any?>) : BaseAdapter() {
+
+    private var selectedPosition = -1
+
     private var onItemClick: ((timeSlot: String, price: String) -> Unit)? = null
     fun setOnItemClickListener(listener: (timeSlot: String, price: String) -> Unit) {
         this.onItemClick = listener
     }
 
     override fun getCount(): Int {
-        return timeSlotsList.size
+        return timeData.size
     }
 
     override fun getItem(position: Int): Any {
-        return timeSlotsList[position]
-
+        val keysList = ArrayList(timeData.keys)
+        return timeData[keysList[position]] ?: HashMap<String, Any?>()
     }
 
     override fun getItemId(position: Int): Long {
@@ -30,33 +34,59 @@ class TimeSlotsAdapter(private val context: Context, private val timeSlotsList: 
         var itemView = convertView
         val viewHolder: ViewHolder
 
-        if (itemView == null) {
-            itemView = LayoutInflater.from(context).inflate(R.layout.time_slot_item, parent, false)
-            viewHolder = ViewHolder()
-            viewHolder.timeSlotTextView = itemView.findViewById(R.id.tvTime)
-            viewHolder.priceTextView = itemView.findViewById(R.id.tvPrice)
+        val timeSlot = getItem(position) as HashMap<String, Any?>
+        val time = timeSlot["time"].toString()
+        val price = timeSlot["price"].toString()
+        val isBooked = timeSlot["booked"] as? Boolean ?: true
 
+        val layoutRes = if (isBooked) {
+            R.layout.time_slot_booked // Layout for booked items
+        } else {
+            R.layout.time_slot_item // Default layout for other items
+        }
+
+        if (itemView == null) {
+            itemView = LayoutInflater.from(context).inflate(layoutRes, parent, false)
+            viewHolder = ViewHolder()
+            viewHolder.timeTextView = itemView.findViewById(R.id.tvTime)
+            viewHolder.priceTextView = itemView.findViewById(R.id.tvPrice)
             itemView.tag = viewHolder
         } else {
             viewHolder = itemView.tag as ViewHolder
         }
 
-        val timeSlot = timeSlotsList[position]
-        val price = priceList[position]
+        viewHolder.timeTextView?.text = time
+        viewHolder.priceTextView?.text = "₹$price"
 
-        viewHolder.timeSlotTextView?.text = timeSlot
-        viewHolder.priceTextView?.text = "₹"+price
+        // Enable clicks for non-booked items
+        if (!isBooked) {
+            itemView?.setOnClickListener {
+                onItemClick?.invoke(time, price)
+                if (selectedPosition != position) {
+                    val previousSelectedPosition = selectedPosition
+                    selectedPosition = position
+                    notifyDataSetChanged() // Notify adapter of data changes
+                }
+            }
 
-        itemView?.setOnClickListener {
-            onItemClick?.invoke(timeSlot, price)
+            // Set background and text colors based on selection
+            if (position == selectedPosition) {
+                itemView?.setBackgroundResource(R.drawable.time_selector)
+            } else {
+                itemView?.setBackgroundResource(R.color.bgblack)
+            }
+        } else {
+            // Disable clicks for booked items
+            itemView?.isClickable = false
+            itemView?.isFocusable = false
+            itemView?.setOnClickListener(null)
         }
 
         return itemView!!
     }
 
-
     private class ViewHolder {
-        var timeSlotTextView: TextView? = null
+        var timeTextView: TextView? = null
         var priceTextView: TextView? = null
     }
 }

@@ -1,13 +1,17 @@
 package com.example.futsalhub
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.setFragmentResultListener
+import androidx.navigation.fragment.findNavController
 import com.example.futsalhub.databinding.CalendarBinding
 import com.example.futsalhub.databinding.FragmentGroundBinding
 import com.google.firebase.firestore.FirebaseFirestore
@@ -26,6 +30,12 @@ class GroundFragment : Fragment() {
     private lateinit var db: FirebaseFirestore
     private var selectedDate = LocalDate.now()
     private val dateFormatter = DateTimeFormatter.ofPattern("dd")
+    val dateFormatterInd = DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.ENGLISH)
+    private lateinit var bookingDate: String
+    private lateinit var bookingPrice: String
+    private lateinit var bookingTime: String
+    private lateinit var groundName: String
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,60 +47,19 @@ class GroundFragment : Fragment() {
 
         (activity as AppCompatActivity).supportActionBar?.title = "Book your ground"
 
-
-
         setFragmentResultListener("requestKey") { _, bundle ->
-            groundId = bundle.getString("bundleKey").toString()
+            groundId = bundle.getString("groundId").toString()
+
 
             db = FirebaseFirestore.getInstance()
             val ref = db.collection("FutsalGrounds").document(groundId)
-            ref.get().addOnSuccessListener {document->
-                val timeSlotsList: Map<String, Any>
-                val finalTimeList = mutableListOf<String>()
-                val priceList:  Map<String, Any>
-                val finalPriceList= mutableListOf<String>()
-
+            ref.get().addOnSuccessListener { document ->
                 if (document != null) {
                     binding.tvDesc.text = document.data?.get("description").toString()
                     binding.tvOvr.text = document.data?.get("ovrRating").toString()
                     binding.tvGround.text = document.data?.get("groundName").toString()
                     binding.tvLocation.text = document.data?.get("location").toString()
-                    binding.tvPrice.text = "₹" + document.data?.get("minPrice").toString()
-
-                    timeSlotsList = document.data?.get("timeSlots") as Map<String, Any>
-                    timeSlotsList?.let {
-                        // Iterate through the map and add values to the list
-                        for ((_, value) in it) {
-                            if (value is String) {
-                                finalTimeList.add(value)
-                            }
-                        }
-                    }
-                    finalTimeList.sort()
-
-                    //document.data["slots"] as? Map<String, Any>
-                    priceList = document.data?.get("price") as Map<String, Any>
-                    priceList?.let {
-                        // Iterate through the map and add values to the list
-                        for ((_, value) in it) {
-                            if (value is String) {
-                                finalPriceList.add(value)
-                            }
-                        }
-                    }
-                    finalPriceList.sort()
-
-                    val gridView = binding.gvTimeSlots
-                    val adapter = TimeSlotsAdapter(requireContext(),finalTimeList,finalPriceList)
-                    gridView.adapter = adapter
-
-                    adapter.setOnItemClickListener { timeSlot, _ ->
-                        //db.collection("FutsalGrounds/")
-                        enableBookButton()
-
-                        // Handle item click here
-                        // You have access to the clicked time slot and price
-                    }
+                    groundName= document.data?.get("groundName").toString()
                 }
             }
 
@@ -100,7 +69,7 @@ class GroundFragment : Fragment() {
 
                 init {
                     view.setOnClickListener {
-                        if(bind.exSevenDayText.alpha.toInt() ==1){
+                        if (bind.exSevenDayText.alpha.toInt() == 1) {
                             if (selectedDate != day.date) {
                                 val oldDate = selectedDate
                                 selectedDate = day.date
@@ -114,7 +83,8 @@ class GroundFragment : Fragment() {
                 fun bind(day: WeekDay) {
                     this.day = day
                     bind.exSevenDateText.text = dateFormatter.format(day.date)
-                    bind.exSevenDayText.text = day.date.dayOfWeek.getDisplayName(TextStyle.SHORT, Locale.ENGLISH)
+                    bind.exSevenDayText.text =
+                        day.date.dayOfWeek.getDisplayName(TextStyle.SHORT, Locale.ENGLISH)
 
                     val colorRes = if (day.date == selectedDate) {
                         R.color.black
@@ -124,15 +94,50 @@ class GroundFragment : Fragment() {
                     bind.exSevenDateText.setTextColor(view.context.getColor(colorRes))
                     bind.exSevenDayText.setTextColor(view.context.getColor(colorRes))
                     bind.exSevenSelectedView.isVisible = day.date == selectedDate
+
+                    if (bind.exSevenSelectedView.isVisible) {
+                        bookingDate = day.date.format(dateFormatterInd)
+
+
+                        db.collection("FutsalGrounds").document(groundId).collection("TImeSlots")
+                            .document(bookingDate).get().addOnSuccessListener { document ->
+                                val timeData = HashMap<String, Any?>()
+                                val data = document.data
+
+                                // Add data to the new data map
+                                if (data != null) {
+                                    timeData.putAll(data)
+                                }
+
+                                Log.i("time123", timeData.toString())
+                                val gridView = binding.gvTimeSlots
+                                val adapter =
+                                    TimeSlotsAdapter(requireContext(), timeData.toSortedMap())
+                                gridView.adapter = adapter
+
+                                disableBookButton()
+
+                                adapter.setOnItemClickListener { timeSlot, price ->
+                                    enableBookButton()
+                                    binding.tvPrice.text = "₹$price"
+                                }
+                            }
+                    }
                 }
             }
 
             binding.exSevenCalendar.dayBinder = object : WeekDayBinder<DayViewContainer> {
                 override fun create(view: View) = DayViewContainer(view)
-                override fun bind(container: DayViewContainer, data: WeekDay){
+                override fun bind(container: DayViewContainer, data: WeekDay) {
                     container.bind(data)
-                    container.bind.exSevenDayText.alpha=if(LocalDate.now()<= data.date && LocalDate.now().plusDays(2)>=data.date) 1f else 0.3f
-                    container.bind.exSevenDateText.alpha=if(LocalDate.now()<= data.date && LocalDate.now().plusDays(2)>=data.date) 1f else 0.3f
+                    container.bind.exSevenDayText.alpha =
+                        if (LocalDate.now() <= data.date && LocalDate.now()
+                                .plusDays(2) >= data.date
+                        ) 1f else 0.3f
+                    container.bind.exSevenDateText.alpha =
+                        if (LocalDate.now() <= data.date && LocalDate.now()
+                                .plusDays(2) >= data.date
+                        ) 1f else 0.3f
                 }
             }
 
@@ -145,12 +150,29 @@ class GroundFragment : Fragment() {
             binding.exSevenCalendar.scrollToDate(LocalDate.now())
         }
 
+        binding.btnBook.setOnClickListener {
+            setFragmentResult(
+                "r",
+                bundleOf(
+                    "time" to bookingTime,
+                    "price" to bookingPrice,
+                    "date" to bookingDate,
+                    "groundId" to groundId,
+                    "groundName" to groundName
+                )
+            )
+            findNavController().navigate(R.id.action_groundScreen_to_paymentFragment)
+        }
+
         return binding.root
     }
 
     private fun enableBookButton() {
-        binding.btnBook.isClickable=true
-        binding.btnBook.alpha=1.0f
+        binding.btnBook.isClickable = true
+        binding.btnBook.alpha = 1.0f
     }
 
+    private fun disableBookButton() {
+        binding.btnBook.isClickable = true
+        binding.btnBook.alpha = 0.5f    }
 }

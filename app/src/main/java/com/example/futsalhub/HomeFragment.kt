@@ -54,11 +54,26 @@ class HomeFragment : Fragment() {
         recyclerView = binding.recyclerView
         recyclerView.layoutManager = layoutManager
 
-        val initialQuery: Query = FirebaseFirestore.getInstance()
-            .collection("FutsalGrounds")
-            .orderBy("groundName")
+        val dataList = mutableListOf<HashMap<String, Any?>>()
 
-        createRecyclerView(initialQuery)
+        FirebaseFirestore.getInstance()
+            .collection("FutsalGrounds")
+            .orderBy("groundName").get().addOnSuccessListener { documents ->
+                for (document in documents) {
+
+                    val newData = HashMap<String, Any?>()
+                    newData.putAll(document.data)
+                    dataList.add(newData)
+
+                }
+                val adapter = MyAdapter(dataList, ::onItemClick)
+                recyclerView.adapter = adapter
+            }.addOnFailureListener { exception ->
+                Log.i("oi21345", exception.toString())
+            }
+
+
+        //createRecyclerView(initialQuery)
 
         //handle ground searches
         val searchManager = activity?.getSystemService(Context.SEARCH_SERVICE) as SearchManager
@@ -93,7 +108,7 @@ class HomeFragment : Fragment() {
                 sortType: String,
                 latitude: Double,
                 longitude: Double,
-                priceFilter: String,
+                filterPrice: String,
                 filterLocations: MutableList<String>,
                 filterType: MutableList<String>
             ) {
@@ -129,7 +144,6 @@ class HomeFragment : Fragment() {
                                     Filter.and(
                                         Filter.inArray("district", filterLocations),
                                         Filter.inArray("groundType", filterType),
-                                        //Filter.lessThanOrEqualTo("minPrice",priceFilter)
                                     )
                                 ).get()
                                 .addOnSuccessListener { documents ->
@@ -137,7 +151,10 @@ class HomeFragment : Fragment() {
 
                                     for ((first, second) in groundDistanceList) {
                                         for (document in documents) {
-                                            if (first == document.id) {
+                                            val minPriceString =
+                                                document.data["minPrice"] as? String ?: "0"
+                                            val minPrice = minPriceString.toDoubleOrNull() ?: 0.0
+                                            if (first == document.id && filterPrice.toDouble() >= minPrice) {
                                                 val newData = HashMap<String, Any?>()
 
                                                 // Get the existing data of the document as map
@@ -159,18 +176,33 @@ class HomeFragment : Fragment() {
                                 }
                         }
                 } else {
-                    val query: Query = FirebaseFirestore.getInstance()
+                    val dataList = mutableListOf<HashMap<String, Any?>>()
+
+                    FirebaseFirestore.getInstance()
                         .collection("FutsalGrounds")
                         .where(
                             Filter.and(
                                 Filter.inArray("district", filterLocations),
                                 Filter.inArray("groundType", filterType),
-                                //Filter.lessThanOrEqualTo("minPrice",priceFilter)
                             )
                         )
-                        .orderBy(sortType)
+                        .orderBy(sortType).get().addOnSuccessListener { documents ->
+                            for (document in documents) {
+                                val minPriceString = document.data["minPrice"] as? String ?: "0"
+                                val minPrice = minPriceString.toDoubleOrNull() ?: 0.0
+                                if (filterPrice.toDouble() >= minPrice) {
+                                    val newData = HashMap<String, Any?>()
+                                    newData.putAll(document.data)
+                                    dataList.add(newData)
+                                }
+                            }
+                            val adapter = MyAdapter(dataList, ::onItemClick)
+                            recyclerView.adapter = adapter
+                        }.addOnFailureListener { exception ->
+                            Log.i("oi21345", exception.toString())
+                        }
 
-                    createRecyclerView(query)
+
                 }
             }
         }
@@ -236,32 +268,31 @@ class HomeFragment : Fragment() {
         return rad * 180.0 / Math.PI
     }
 
-
     fun String.capitalizeWords(): String = split(" ").map { it.capitalize() }.joinToString(" ")
 
     private fun handleUserData(data: GroundListModel) {
-        setFragmentResult("requestKey", bundleOf("bundleKey" to data.groundId))
+        setFragmentResult("requestKey", bundleOf("groundId" to data.groundId))
         findNavController().navigate(R.id.action_listScreen_to_groundScreen)
     }
 
     private fun onItemClick(data: HashMap<String, Any?>) {
-        setFragmentResult("requestKey", bundleOf("bundleKey" to data["groundId"]))
+        setFragmentResult("requestKey", bundleOf("groundId" to data["groundId"]))
         findNavController().navigate(R.id.action_listScreen_to_groundScreen)
     }
+
     private suspend fun clearDataFromStore() {
         lifecycleScope.launch {
             try {
                 // Clear or delete the required keys or all data from DataStore
                 dataStore.edit { preferences ->
                     preferences.clear() // Clear all data
-                    // Alternatively, remove specific keys if needed:
-                    // preferences.remove(preferencesKey<String>("your_key"))
                 }
             } catch (e: Exception) {
                 Log.e("DataStore", "Error clearing DataStore: ${e.message}")
             }
         }
     }
+
     override fun onStart() {
         super.onStart()
         groundAdapter?.startListening()
