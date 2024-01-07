@@ -5,26 +5,30 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.setFragmentResultListener
-import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
 import com.example.futsalhub.databinding.CalendarBinding
 import com.example.futsalhub.databinding.FragmentGroundBinding
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
 import com.kizitonwose.calendar.core.WeekDay
 import com.kizitonwose.calendar.view.ViewContainer
 import com.kizitonwose.calendar.view.WeekDayBinder
+import com.razorpay.Checkout
+import com.razorpay.PaymentResultListener
+import org.json.JSONObject
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.time.format.TextStyle
 import java.util.Locale
 
 
-class GroundFragment : Fragment() {
+class GroundFragment : Fragment(), PaymentResultListener {
     private lateinit var binding: FragmentGroundBinding
     private lateinit var groundId: String
     private lateinit var db: FirebaseFirestore
@@ -35,6 +39,9 @@ class GroundFragment : Fragment() {
     private lateinit var bookingPrice: String
     private lateinit var bookingTime: String
     private lateinit var groundName: String
+    private lateinit var ImgView: ImageView
+    private lateinit var gimg: String
+    private lateinit var storage: FirebaseStorage
 
 
     override fun onCreateView(
@@ -50,7 +57,7 @@ class GroundFragment : Fragment() {
         setFragmentResultListener("requestKey") { _, bundle ->
             groundId = bundle.getString("groundId").toString()
 
-
+            FirebaseStorage.getInstance()
             db = FirebaseFirestore.getInstance()
             val ref = db.collection("FutsalGrounds").document(groundId)
             ref.get().addOnSuccessListener { document ->
@@ -59,7 +66,10 @@ class GroundFragment : Fragment() {
                     binding.tvOvr.text = document.data?.get("ovrRating").toString()
                     binding.tvGround.text = document.data?.get("groundName").toString()
                     binding.tvLocation.text = document.data?.get("location").toString()
-                    groundName= document.data?.get("groundName").toString()
+                    groundName = document.data?.get("groundName").toString()
+                    ImgView = binding.imageView
+                    gimg = document.data?.get("groundImg").toString()
+                    Glide.with(this).load(gimg).into(ImgView)
                 }
             }
 
@@ -115,7 +125,7 @@ class GroundFragment : Fragment() {
                                     TimeSlotsAdapter(requireContext(), timeData.toSortedMap())
                                 gridView.adapter = adapter
 
-                                disableBookButton()
+                                //disableBookButton()
 
                                 adapter.setOnItemClickListener { timeSlot, price ->
                                     enableBookButton()
@@ -151,7 +161,7 @@ class GroundFragment : Fragment() {
         }
 
         binding.btnBook.setOnClickListener {
-            setFragmentResult(
+            /*setFragmentResult(
                 "r",
                 bundleOf(
                     "time" to bookingTime,
@@ -160,9 +170,13 @@ class GroundFragment : Fragment() {
                     "groundId" to groundId,
                     "groundName" to groundName
                 )
-            )
-            findNavController().navigate(R.id.action_groundScreen_to_paymentFragment)
+            )*/
+            savePayment(1000)
+            //findNavController().navigate(R.id.action_groundScreen_to_paymentFragment)
         }
+
+
+        Checkout.preload(requireActivity())
 
         return binding.root
     }
@@ -174,5 +188,63 @@ class GroundFragment : Fragment() {
 
     private fun disableBookButton() {
         binding.btnBook.isClickable = true
-        binding.btnBook.alpha = 0.5f    }
+        binding.btnBook.alpha = 0.5f
+    }
+
+    private fun savePayment(bookingPrice: Int) {
+        val checkout = Checkout()
+        checkout.setKeyID("rzp_test_bTaaURb4EQKwlB")
+        try {
+            val options = JSONObject()
+            options.put("name", "FutsalHub")
+            options.put("description", "FutsalHub")
+            options.put("theme.color", "#1ED660")
+            options.put("theme.backdrop_color", "#121212")
+            options.put("currency", "INR")
+            options.put("amount", bookingPrice * 100)
+
+            val retryObj = JSONObject()
+            retryObj.put("enabled", true)
+            retryObj.put("max_count", 4)
+            options.put("retry", retryObj)
+
+            /*val prefill = JSONObject()
+            prefill.put("email","gaurav.kumar@example.com")
+
+            options.put("prefill",prefill)*/
+
+            checkout.open(requireActivity(), options)
+
+            /*val payoutRequest = JSONObject()
+            payoutRequest.put("account_number", "merchant_account_number")
+            payoutRequest.put("amount", 1000) // Amount in paise
+            payoutRequest.put("currency", "INR")
+            payoutRequest.put("mode", "UPI")
+            payoutRequest.put("purpose", "payout")
+            payoutRequest.put("queue_if_low_balance", true)
+
+            val payout = razorpay.Payouts.create(payoutRequest)*/
+        } catch (e: Exception) {
+            Log.i("exception123",e.toString())
+
+        }
+
+    }
+
+    override fun onPaymentSuccess(p0: String?) {
+        val uid=FirebaseAuth.getInstance().currentUser?.uid.toString()
+        FirebaseFirestore.getInstance().collection("Users").
+                document(uid).get().addOnSuccessListener {document->
+            val userName=document.data?.get("userName").toString()
+                    //update boolean
+            //add doc in booking
+        }.addOnFailureListener {
+            Log.i("paysuccess",it.message.toString())
+        }
+
+    }
+
+    override fun onPaymentError(p0: Int, p1: String?) {
+        TODO("Not yet implemented")
+    }
 }

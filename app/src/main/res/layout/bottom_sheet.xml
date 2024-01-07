@@ -230,8 +230,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/gotham_book"
             android:text="7-a side"
-            android:textColor="@color/black"
-            app:chipBackgroundColor="@color/green" />
+            android:textColor="@color/black" />
     </com.google.android.material.chip.ChipGroup>
 
     <com.google.android.material.divider.MaterialDivider

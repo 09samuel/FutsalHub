@@ -9,20 +9,20 @@
     tools:context=".SelectGroundFragment">
 
     <TextView
-        android:id="@+id/tvRemoveGround"
+        android:id="@+id/tvSelectGround"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
         android:layout_marginTop="30dp"
         android:fontFamily="@font/gotham_medium_"
-        android:text="Remove Ground"
+        android:text="Select Ground"
         android:textStyle="bold"
         android:textColor="@color/white"
         android:textSize="40dp" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvRemoveGround"
-        android:layout_below="@+id/tvRemoveGround"
+        android:id="@+id/rvSelectGround"
+        android:layout_below="@+id/tvSelectGround"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="40dp"

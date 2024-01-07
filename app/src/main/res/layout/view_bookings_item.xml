@@ -15,7 +15,7 @@
         android:background="@color/grey">
 
         <TextView
-            android:id="@+id/tvGroundName"
+            android:id="@+id/tvCustomerName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
@@ -23,25 +23,10 @@
             android:ellipsize="end"
             android:fontFamily="@font/gotham_medium_"
             android:maxLines="1"
-            android:text="GroundName"
+            android:text="CustomerName"
             android:textColor="@color/white"
-            android:textSize="16sp"
+            android:textSize="20sp"
             android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/tvGroundLocation"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tvGroundName"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="6dp"
-            android:layout_marginBottom="8dp"
-            android:drawableLeft="@drawable/ic_location"
-            android:fontFamily="@font/gotham_book"
-            android:maxLines="1"
-            android:text="Location"
-            android:textColor="@android:color/darker_gray"
-            android:textSize="12sp" />
 
         <TextView
             android:id="@+id/tvGroundPrice"
@@ -61,7 +46,7 @@
             android:id="@+id/tvBookingDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tvGroundLocation"
+            android:layout_below="@+id/tvCustomerName"
             android:layout_marginStart="20dp"
             android:layout_marginTop="6dp"
             android:layout_marginBottom="8dp"
@@ -75,7 +60,7 @@
             android:id="@+id/tvBookingTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tvGroundLocation"
+            android:layout_below="@+id/tvCustomerName"
             android:layout_marginStart="6dp"
             android:layout_marginTop="6dp"
             android:layout_marginBottom="8dp"
@@ -86,33 +71,35 @@
             android:textColor="@color/green"
             android:textSize="14sp" />
 
-        <RatingBar
-            android:progressBackgroundTint="@color/white"
-            android:id="@+id/ratingBar"
-            android:isIndicator="false"
-            style="?android:attr/ratingBarStyleSmall"
+        <TextView
+           android:id="@+id/tvTransactionId"
             android:layout_width="wrap_content"
-            android:scaleX="1.3"
-            android:progressTint="#FFD700"
-            android:scaleY="1.3"
             android:layout_height="wrap_content"
-            android:layout_below="@id/tvBookingDate"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="10dp"
-            android:stepSize="1" />
-
-        <Button
-            android:id="@+id/btnCancelBooking"
-            android:fontFamily="@font/gotham_medium_"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:textSize="10sp"
-            android:layout_marginEnd="20dp"
+            android:layout_below="@+id/tvBookingDate"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="6dp"
             android:layout_marginBottom="8dp"
-            android:textColor="@color/black"
-            android:layout_below="@id/tvBookingDate"
-            android:text="CANCEL BOOKING"
-            android:layout_alignParentRight="true"/>
+            android:fontFamily="@font/gotham_book"
+            android:maxLines="1"
+            android:text="Transaction ID: "
+            android:textColor="@color/light_white"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/tvTransaction"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvBookingDate"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="6dp"
+            android:layout_toRightOf="@id/tvTransactionId"
+            android:layout_marginBottom="8dp"
+            android:fontFamily="@font/gotham_book"
+            android:maxLines="1"
+            android:text="TransactionId"
+            android:textColor="@color/light_white"
+            android:textSize="14sp" />
+
 
     </RelativeLayout>
 </androidx.cardview.widget.CardView>

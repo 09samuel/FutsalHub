@@ -4,6 +4,7 @@
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
         <item name="android:statusBarColor">@color/bgblack</item>
+        <item name="colorPrimary">@color/green</item>
         <item name="colorControlActivated">@color/light_white</item>
         <item name="android:editTextColor">@color/white</item>
     </style>

@@ -9,5 +9,31 @@
         android:id="@+id/groundAdminDashboard"
         android:name="com.example.futsalhub.GroundAdminDashboard"
         android:label="fragment_ground_admin_dashboard"
-        tools:layout="@layout/fragment_ground_admin_dashboard" />
+        tools:layout="@layout/fragment_ground_admin_dashboard" >
+        <action
+            android:id="@+id/action_groundAdminDashboard_to_selectGroundFragment"
+            app:destination="@id/selectGroundFragment" />
+        <action
+            android:id="@+id/action_groundAdminDashboard_to_editDetailsFragment"
+            app:destination="@id/editDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/viewBookingsFragment"
+        android:name="com.example.futsalhub.ViewBookingsFragment"
+        android:label="fragment_view_bookings"
+        tools:layout="@layout/fragment_view_bookings" />
+    <fragment
+        android:id="@+id/selectGroundFragment"
+        android:name="com.example.futsalhub.SelectGroundFragment"
+        android:label="fragment_select_ground"
+        tools:layout="@layout/fragment_select_ground" >
+        <action
+            android:id="@+id/action_selectGroundFragment_to_viewBookingsFragment"
+            app:destination="@id/viewBookingsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/editDetailsFragment"
+        android:name="com.example.futsalhub.EditDetailsFragment"
+        android:label="fragment_edit_details"
+        tools:layout="@layout/fragment_edit_details" />
 </navigation>

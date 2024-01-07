@@ -43,7 +43,7 @@ class MainActivity : AppCompatActivity() {
 
         // make bottom nav visible only on certain pages
         navController.addOnDestinationChangedListener { _, nd: NavDestination, _ ->
-            if (nd.id == R.id.groundScreen ) {
+            if (nd.id == R.id.groundScreen || nd.id ==R.id.editProfileFragment ) {
                 bottomNavigationView.visibility = View.GONE
                 //toolbar.visibility = View.GONE
             } else {

@@ -19,7 +19,9 @@
         <activity
             android:name=".GroundAdminActivity"
             android:screenOrientation="portrait"
-            android:exported="false" />
+            android:exported="false" >
+
+        </activity>
         <activity
             android:name=".StartActivity"
             android:screenOrientation="portrait"

@@ -8,6 +8,10 @@
     tools:context=".BookingHistoryFragment">
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvHistory"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:paddingBottom="100dp"
+        android:scrollbarStyle="outsideOverlay"/>
 </RelativeLayout>
